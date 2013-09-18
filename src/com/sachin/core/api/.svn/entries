@@ -1,0 +1,40 @@
+10
+
+dir
+43
+svn+ssh://ecomm@192.168.1.98/home/sachin/work/proj_repos/chatbot/src/com/sachin/core/api
+svn+ssh://ecomm@192.168.1.98/home/sachin/work/proj_repos
+
+
+
+2012-04-20T09:05:22.294627Z
+14
+root
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5994a91a-f62c-460f-a496-fd3fb25ac84f
+
+http
+dir
+
+solr
+dir
+
+db
+dir
+
+ws
+dir
+

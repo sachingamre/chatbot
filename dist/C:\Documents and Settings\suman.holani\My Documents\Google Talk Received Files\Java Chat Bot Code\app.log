@@ -1,0 +1,12 @@
+19-03-2013@23:11:12 FATAL (     App.java:252)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.CommandLoader.parseDocument(CommandLoader.java:103)
+	at com.sachin.core.loaders.CommandLoader.<init>(CommandLoader.java:46)
+	at com.sachin.app.App.init(App.java:86)
+	at chat.Main.main(Main.java:30)
+19-03-2013@23:11:12 FATAL (     App.java:252)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.CommandLoader.parseDocument(CommandLoader.java:103)
+	at com.sachin.core.loaders.CommandLoader.<init>(CommandLoader.java:46)
+	at com.sachin.app.App.init(App.java:86)
+	at chat.Main.main(Main.java:30)

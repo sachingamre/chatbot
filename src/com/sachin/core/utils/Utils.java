@@ -1,0 +1,409 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.sachin.core.utils;
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ *  Class has all utility functions
+ *
+ * @author sachin.gamre
+ */
+public class Utils {
+
+    /*
+     * Function prints the list tuple passed to it as an argument
+     *
+     * @param: list
+     */
+    public static void printList(List list, String prefix) {
+        Iterator it = list.iterator() ;
+        while(it.hasNext()) {
+            Object value = it.next() ;
+            if(value instanceof HashMap) {
+                printHash((HashMap) value, prefix) ;
+            }
+            else if(value instanceof List) {
+                printList((List) value, prefix) ;
+            }
+            else {
+                System.out.println(prefix + value.toString()) ;
+            }
+            // System.out.println(prefix + it.next().toString()) ;
+        }
+    }
+
+    /*
+     * Function prints the HashMap passed to it as an argument
+     * The function prints the map recursively
+     *
+     * @param: list
+     */
+    public static void printHash(HashMap hashMap, String prefix) {
+        Iterator it = hashMap.keySet().iterator() ;
+
+        while(it.hasNext()) {
+            String key = it.next().toString() ;
+            //System.out.println("Key : " + key) ;
+            Object value = hashMap.get(key) ;
+            if(value instanceof HashMap) {
+                printHash((HashMap) value, prefix) ;
+            }
+            else if(value instanceof List) {
+                printList((List) value, prefix) ;
+            }
+            else {
+                System.out.println(prefix + value.toString()) ;
+            }
+        }
+    }
+
+    public static void printArray(Object[] oArr) {
+        for(int i = 0; i < oArr.length; i++) {
+            System.out.println(i + " " + oArr[i]) ;
+        }
+    }
+
+    /*
+     * Function matches the given pattern with the given string
+     * and returns success/failure as boolean
+     *
+     * @param: String pattern
+     * @param: String string
+     *
+     * @return: boolean
+     */
+    public static boolean match(String pattern, String string) {
+        Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL ) ;
+        Matcher matcher = p.matcher(string);
+        return matcher.matches() ;
+    }
+
+    /*
+     * Function matches the given pattern with the given string
+     * and returns success/failure as boolean
+     *
+     * @param: String pattern
+     * @param: String string
+     *
+     * @return: boolean
+     */
+    public static String[] getMatches(String pattern, String string) {
+        Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE) ;
+        Matcher matcher = p.matcher(string);
+        String[] matched = null ;
+
+        if(matcher.find()) {
+            for(int i = 1; i <= matcher.groupCount(); i++) {
+                matched[i-1] = matcher.group(i) ;
+            }
+        }
+        return matched ;
+    }
+
+    /*
+     * Function matches the given pattern with the given string
+     * and returns success/failure as boolean
+     *
+     * @param: String pattern
+     * @param: String string
+     *
+     * @return: boolean
+     */
+    public static boolean matchLiteral(String pattern, String string) {
+        //System.out.println("pattern " + pattern) ;
+       //System.out.println("String " + string) ;
+        Pattern p = Pattern.compile(pattern, Pattern.LITERAL) ;
+        Matcher matcher = p.matcher(string);
+
+        return matcher.matches() ;
+    }
+
+    /**
+     * Function resembles PHP style regular expression replacement, the groups in the pattern can be
+     * referenced by $<group counter> variable
+     * returns the desired replace string
+     *
+     * Usage: Utils.replace("(\\w+) (\\w+) (\\d+) (\\w+)", "Modified Text: $1 $2 $3 $4", "Sachin is 32 now")
+     *
+     * @param: String pattern
+     * @param: String replacement
+     * @param: String subject
+     *
+     * @return: String replaced String
+     */
+    public static String replace(String pattern, String replacement, String subject) {
+
+        // if replacement doesn't have $1, $2...$n, any of this variables, then do normal replacement
+        if(!match("\\$\\d+", replacement)) {
+            return subject.replaceAll(pattern, replacement) ;
+        }
+        else {
+            // Match the actual pattern first
+            Pattern p = Pattern.compile(pattern) ;
+            Matcher m = p.matcher(subject) ;
+
+            // Search $1, $2...$n in the replacement. If they are found then change the respective
+            // values in the given subject string
+            Pattern p1 = Pattern.compile("\\$\\d+") ;
+            Matcher m1 = p1.matcher(replacement) ;
+            StringBuffer sb = new StringBuffer() ;
+
+            // For each replacement substitute the original value from previous pattern
+            while(m1.find()) {
+                String match = "" ;
+                int match1 = Integer.parseInt(m1.group().replaceAll("\\$","")) ;
+                if(m.lookingAt()) {
+                    match = m.group(match1) ;
+                    m1.appendReplacement(sb, match) ;
+                }
+                else {
+                    m1.appendReplacement(sb, "") ;
+                    // break ;
+                }
+            }
+            m1.appendTail(sb) ;
+            return sb.toString() ;
+        }
+    }
+
+
+    /*
+     * Function joins a given array list with given delimiter
+     *
+     * @param: ArrayList list
+     * @param: char delimiter
+     *
+     * @return: String joined string
+     */
+    public static String join(ArrayList list, char delim) {
+        StringBuilder buf = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            if (i != 0)
+                buf.append(delim);
+            buf.append((String) list.get(i));
+        }
+        return buf.toString();
+    }
+
+
+    /*
+     * Function converts string date into timestamp
+     *
+     * @param: String date
+     * @param: String date format
+     *
+     * @return: long timestamp
+     */
+    public static long strToTime(String date, String format)
+    {
+        long timeinsecs = 0 ;
+        try {
+            // DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+            // Expected format is "yyyy-MM-dd HH:mm:ss"
+            DateFormat dfm = new SimpleDateFormat(format);
+            Date formattedDate = dfm.parse(date);
+            timeinsecs = formattedDate.getTime() ;
+        }
+        catch (ParseException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return timeinsecs ;
+    }
+
+    /**
+     * Function executes the given system command and returns the output
+     * It also handles the error if occurred.
+     *
+     * @param String command
+     * @param String date format
+     *
+     * @return long timestamp
+     */
+    public static HashMap system(String cmd) {
+
+        // Prepare output hash
+        HashMap result = new HashMap() ;
+        List output = new ArrayList() ;
+        List error = new ArrayList() ;
+
+        result.put("output", output) ;
+        result.put("error", error) ;
+
+        Runtime rt = Runtime.getRuntime();
+        Process proc = null;
+        try {
+                proc = rt.exec(cmd);
+
+                InputStream stderr = proc.getErrorStream();
+                InputStreamReader isrErr = new InputStreamReader(stderr);
+                BufferedReader brErr = new BufferedReader(isrErr);
+
+                InputStream stdout = proc.getInputStream();
+                InputStreamReader isrStd = new InputStreamReader(stdout);
+                BufferedReader brStd = new BufferedReader(isrStd);
+
+                String val = null;
+                while ((val = brStd.readLine()) != null) {
+                    System.out.println(val);
+                    output.add(val);
+                }
+                while ((val = brErr.readLine()) != null) {
+                        System.out.println("error val: " + val);
+                        error.add(val) ;
+                }
+
+                int exitVal = proc.waitFor();
+        }
+        catch (Exception e) {
+                //Admin.logger.warn("Exception occured while executing the command '" + cmd + "'") ;
+                //Admin.logger.warn("Exception " + e.getMessage()) ;
+                System.out.println("Exception occured while executing the command '" + cmd + "'") ;
+                System.out.println("Exception " + e.getMessage()) ;
+                System.out.println(e) ;
+        }
+        return result ;
+    }
+
+    public static void rsync(String rsyncPath, String user, String host, String remotePath, String localPath) {
+        try {
+            // Currently uses passwordless SSH keys to login to sword
+            String[] cmd = new String[]{rsyncPath, "-r", user + "@" + host + ":" + remotePath, localPath};
+            ProcessBuilder pb = new ProcessBuilder(cmd);
+            Process p = pb.start();
+            int val = p.waitFor();
+            if (val != 0) {
+                try {
+                    throw new Exception("Exception during RSync; return code = " + val);
+                }
+                catch (Exception ex) {
+                    Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        catch (InterruptedException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static String[] clean(final String[] v) {
+        List<String> list = new ArrayList<String>(Arrays.asList(v));
+        list.removeAll(Collections.singleton(null));
+        list.removeAll(Collections.singleton(""));
+        return list.toArray(new String[list.size()]);
+    }
+
+    /**
+     * Returns the contents of the file in a byte array.
+     */
+    /*
+    public static byte[] getBytesFromFile(File file) throws IOException {
+        InputStream is = new FileInputStream(file);
+
+        // Get the size of the file
+        long length = file.length();
+
+        // You cannot create an array using a long type.
+        // It needs to be an int type.
+        // Before converting to an int type, check
+        // to ensure that file is not larger than Integer.MAX_VALUE.
+        if (length > Integer.MAX_VALUE) {
+            // File is too large
+        }
+
+        // Create the byte array to hold the data
+        byte[] bytes = new byte[(int)length];
+
+        // Read in the bytes
+        int offset = 0;
+        int numRead = 0;
+        while (offset < bytes.length
+               && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
+            offset += numRead;
+        }
+
+        // Ensure all the bytes have been read in
+        if (offset < bytes.length) {
+            throw new IOException("Could not completely read file "+file.getName());
+        }
+
+        // Close the input stream and return bytes
+        is.close();
+        return bytes;
+    }*/
+
+     public static List restPostClient(URL url , String params)  {
+ List list=new ArrayList();
+	  try {
+
+
+
+		//URL url = new URL("http://localhost:8080/RESTfulExample/json/product/post");
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setDoOutput(true);
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Content-Type", "application/json");
+
+
+		OutputStream os = conn.getOutputStream();
+		os.write(params.getBytes());
+		os.flush();
+
+		if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+			throw new RuntimeException("Failed : HTTP error code : "
+				+ conn.getResponseCode());
+		}
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				(conn.getInputStream())));
+
+		String output;
+		System.out.println("Output from Server .... \n");
+		while ((output = br.readLine()) != null) {
+			System.out.println(output);
+
+                        list.add(output);
+		}
+
+		conn.disconnect();
+
+
+	  } catch (IOException e) {
+
+		e.printStackTrace();
+
+	 }
+  return list;
+
+    }
+
+
+
+}

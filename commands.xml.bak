@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : commands.xml
+    Created on : May 4, 2011, 12:30 PM
+    Author     : sachin.gamre
+    Description:
+        Purpose of the document follows.
+-->
+<config>
+    <credentials>
+        <loginname>black.swan728</loginname>
+        <password>password132</password>
+    </credentials>
+    <commands>
+        <command>
+            <id>1</id>
+            <pattern>Help</pattern>
+            <description>Prints help</description>
+            <sourcetype>String</sourcetype>
+            <source>Please type following commands to interact with our online customer service bot
+			1. Show {moviename} timings {theatername} {date}
+			2. shows movies schedule on given theater on given date</source>
+        </command>
+        <command>
+            <id>2</id>
+            <pattern>showmovie</pattern>
+            <description>Prints help</description>
+            <sourcetype>class</sourcetype>
+            <source>chat.test</source>
+        </command>
+		<command>
+            <id>3</id>
+            <pattern>bookmovie</pattern>
+            <description>Prints help</description>
+            <sourcetype>class</sourcetype>
+            <source>chat.test</source>
+        </command>
+		<command>
+            <id>4</id>
+            <pattern>google</pattern>
+            <description>Prints help</description>
+            <sourcetype>http</sourcetype>
+            <source>http://www.google.com</source>
+        </command>
+    </commands>
+</config>

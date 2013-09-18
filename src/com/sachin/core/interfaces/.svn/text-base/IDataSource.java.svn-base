@@ -1,0 +1,17 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.sachin.core.interfaces;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author sachin
+ */
+public interface IDataSource extends Serializable {
+    public String pullData(String args[], int page, int totalRecords) ;
+    public String pullAds() ;
+}

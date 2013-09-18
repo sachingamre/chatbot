@@ -1,0 +1,218 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.sachin.core.interfaces;
+
+import com.sachin.app.App;
+import com.sachin.core.api.http.HttpRestClient;
+import com.sachin.core.ds.Command;
+//import com.sachin.core.interfaces.IDataSource;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+//import java.net.MalformedURLException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.lang.StringUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+/**
+ *
+ * @author sachin
+ */
+public abstract class Interactivity implements IDataSource {
+
+    private String _user = null;
+    private String _cPattern = null;
+    protected HashMap<String, HashMap> _commandQuestions = new HashMap<String, HashMap>();
+    //key is pattern , hash map of questions and their number
+    protected String doneMessage = null;
+    protected int level = 1; //number fo questions
+    protected int max_question = 10;
+
+    protected abstract int getLevel();
+
+    /**
+     *set the difficulty level of questions and number of questions in each level
+     */
+    protected abstract void setNumber(int questionCount);
+
+    /**
+     *get the  number of questions in each level
+     * @return
+     */
+    protected abstract int getNumber(int level); //level * maxquestion
+
+    /**
+     *
+     * fetch the list of questions from Quiz API's
+     * @param level
+     * @param number
+     * @return
+     */
+    protected abstract List getQuestions(int level, int number); //level is 1 bydefault
+
+    /**
+     * push the end arser set toQIz API's
+     * @param resultstore
+     */
+    protected abstract void pushAnswers(String resultstore);
+
+    protected Interactivity(Command command) {
+        System.out.println("In Interactivity constructor");
+        if (!_commandQuestions.containsKey(command.pattern)) //if there is any command
+        {
+            // List questions = command.getQuestions();
+            List questions = this.getQuestions(this.getLevel(), this.getNumber(this.getLevel()));
+            int totalQuestions = questions.size();
+            System.out.println("number of questions " + totalQuestions);
+            doneMessage = command.doneMessage;
+
+            HashMap tmpCmd = new HashMap();
+            tmpCmd.put("questions", questions);
+            tmpCmd.put("question_counter", totalQuestions);
+
+            _commandQuestions.put(command.pattern, tmpCmd);
+        }
+    }
+
+    /**
+     * The function interacts with the user. The very first time when the user
+     * sends this command, the arguments to the commands are stored in a list
+     * and interactive flag is set to true for that user. Then one by one the
+     * questions are asked to the user and the respective answer is stored in the list.
+     * Once all the questions are asked. The process will set the interactivity flag to false
+     * accumulate all the answers and perform the action set in the command XML.
+     * The action could be email/log/process.
+     *
+     * this is distributed
+     *
+     * @param args
+     * @param page
+     * @param totalRecords
+     * @return String 
+     */
+    public String pullData(String[] args, int page, int totalRecords) {
+        String data = null;
+
+        if (_user != null) {
+            // check if user session is started for this interactive command
+            // String key = _user + "_" + _cPattern ;
+            String key = _user;
+            List tmpQ = (List) ((HashMap) _commandQuestions.get(_cPattern)).get("questions");
+            int totalQuestions = Integer.parseInt(((HashMap) _commandQuestions.get(_cPattern)).get("question_counter").toString());
+
+
+            //user has just started interaction
+            if (!App.COMMAND_INTERACTIVE_SESSION.containsKey(key)) {
+                // start interactive session
+                HashMap iSession = new HashMap(); //this will contain all data related to perticular user answers,counters,pattern
+                iSession.put("answers", new ArrayList());
+                iSession.put("qCounter", 1);
+                iSession.put("command", _cPattern);
+                iSession.put("arguments", args);
+                App.COMMAND_INTERACTIVE_SESSION.put(key, iSession);
+                data = tmpQ.get(0).toString();
+            } else {
+                HashMap userISession = (HashMap) App.COMMAND_INTERACTIVE_SESSION.get(key);
+
+                int qCounter = Integer.parseInt(userISession.get("qCounter").toString());
+                ArrayList answers = (ArrayList) userISession.get("answers");
+                String[] argumentList = (String[]) userISession.get("arguments");
+
+                // add answers
+                if (args.length > 0) {
+                    answers.add(StringUtils.join(args, ","));
+                }
+
+                // check if it is the last answer
+                if (qCounter == totalQuestions) {
+                    // this is the last answer. User has answered all the questions correctly
+                    // log all the answers
+                    String argList = userISession.get("arguments").toString();
+                    String ansList = answers.toString();
+                    System.out.println("Interactive session over ");
+                    System.out.println("Initial arguments " + argList);
+                    System.out.println("Answers " + ansList);
+                    //App.logger.info("args:" + argList);
+                    //App.logger.info("args:" + argList);
+                    //App.logger.info("args:" + argList);
+                    App.COMMAND_INTERACTIVE_SESSION.remove(key);
+                    data = doneMessage;
+                } else {
+                    data = tmpQ.get(qCounter).toString();
+                    qCounter++;
+                    HashMap iSession = new HashMap();
+                    iSession.put("answers", answers);
+                    iSession.put("qCounter", qCounter);
+                    iSession.put("command", _cPattern);
+                    iSession.put("arguments", argumentList);
+                    App.COMMAND_INTERACTIVE_SESSION.put(key, iSession);
+                }
+            }
+        }
+        return data;
+    }
+
+    public String pullAds() {
+        //
+        String str, content = null;
+
+        URL url = null;
+        try {
+            // url =new URL ("http://192.168.1.98/zap_ads_iframe.htm?pagenm=www.test.com/framebranding.htm&posn=test_frambranding&width=100&height=200");
+            //url = new URL("http://192.168.1.98/questiondb.php");
+
+            url = new URL("http://zapads.zapak.com/cgi-bin/ads_json.cgi/www.test.com/chatbot@Chobot468/11193639146?");
+            content = url.toString();
+            //String params = "{\"uid\":9320370793,\"sessionid\":12344567}";
+
+            while (content.contains("http")) {
+
+                String params = "";
+                str = HttpRestClient.restPostClient(url, params);
+                System.out.println("Response " + str);
+
+                if (str.contains("json")) {
+                    str = str.replace("functionjson(", "");
+                    str = str.replace(")", "");
+                    System.out.println("new Response is " + str);
+                    JSONObject json = (JSONObject) JSONValue.parse(str);
+                    //JSONArray jsonarray = (JSONArray)json.get("AdUrl");
+                    String imageURL = (String) json.get("AdUrl");
+                    System.out.println("image URL is " + imageURL);
+
+                    url = new URL(imageURL);
+                    content = url.toString();
+                } else {
+                    content = str;
+                }
+
+            }
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Interactivity.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        content="\n"+content+"\n";
+        return content;
+    }
+
+    public Interactivity forUser(String userName) {
+        _user = userName;
+        return this;
+    }
+
+    public Interactivity forCPattern(String pattern) {
+        _cPattern = pattern;
+        return this;
+    }
+}

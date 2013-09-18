@@ -1,0 +1,146 @@
+annotation.processing.enabled=true
+annotation.processing.enabled.in.editor=false
+annotation.processing.processor.options=
+annotation.processing.processors.list=
+annotation.processing.run.all.processors=true
+annotation.processing.source.output=${build.generated.sources.dir}/ap-source-output
+build.classes.dir=${build.dir}/classes
+build.classes.excludes=**/*.java,**/*.form
+# This directory is removed when the project is cleaned:
+build.dir=build
+build.generated.dir=${build.dir}/generated
+build.generated.sources.dir=${build.dir}/generated-sources
+# Only compile against the classpath explicitly listed here:
+build.sysclasspath=ignore
+build.test.classes.dir=${build.dir}/test/classes
+build.test.results.dir=${build.dir}/test/results
+# Uncomment to specify the preferred debugger connection transport:
+#debug.transport=dt_socket
+debug.classpath=\
+    ${run.classpath}
+debug.test.classpath=\
+    ${run.test.classpath}
+# This directory is removed when the project is cleaned:
+dist.dir=dist
+dist.jar=${dist.dir}/Chat.jar
+dist.javadoc.dir=${dist.dir}/javadoc
+excludes=
+file.reference.apache-solr-common-1.3.0.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\apache-solr-1.3.0\\apache-solr-1.3.0\\dist\\apache-solr-common-1.3.0.jar
+file.reference.apache-solr-common-1.3.0.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\apache-solr-common-1.3.0.jar
+file.reference.apache-solr-solrj-1.3.0.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\apache-solr-1.3.0\\apache-solr-1.3.0\\dist\\apache-solr-solrj-1.3.0.jar
+file.reference.apache-solr-solrj-1.3.0.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\apache-solr-solrj-1.3.0.jar
+file.reference.commons-codec-1.3.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\apache-solr-1.3.0\\apache-solr-1.3.0\\lib\\commons-codec-1.3.jar
+file.reference.commons-codec-1.3.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\commons-codec-1.3.jar
+file.reference.commons-httpclient-3.1.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\apache-solr-1.3.0\\apache-solr-1.3.0\\dist\\solrj-lib\\commons-httpclient-3.1.jar
+file.reference.commons-httpclient-3.1.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\commons-httpclient-3.1.jar
+file.reference.commons-io-1.3.1.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\apache-solr-1.3.0\\apache-solr-1.3.0\\lib\\commons-io-1.3.1.jar
+file.reference.commons-io-1.3.1.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\commons-io-1.3.1.jar
+file.reference.commons-lang-2.6.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\commons-lang-2.6-bin\\commons-lang-2.6\\commons-lang-2.6.jar
+file.reference.commons-lang-2.6.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\commons-lang-2.6.jar
+file.reference.commons-logging-1.1.1.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\httpcomponents-client-4.1.1-bin\\httpcomponents-client-4.1.1\\lib\\commons-logging-1.1.1.jar
+file.reference.commons-logging-1.1.1.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\commons-logging-1.1.1.jar
+file.reference.geronimo-stax-api_1.0_spec-1.0.1.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\apache-solr-1.3.0\\apache-solr-1.3.0\\lib\\geronimo-stax-api_1.0_spec-1.0.1.jar
+file.reference.geronimo-stax-api_1.0_spec-1.0.1.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\geronimo-stax-api_1.0_spec-1.0.1.jar
+file.reference.hazelcast-1.9.3-RC.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\hazelcast-1.9.3-RC\\hazelcast-1.9.3-RC\\lib\\hazelcast-1.9.3-RC.jar
+file.reference.hazelcast-all-1.9.3-RC.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\hazelcast-1.9.3-RC\\hazelcast-1.9.3-RC\\lib\\hazelcast-all-1.9.3-RC.jar
+file.reference.hazelcast-all-1.9.3-RC.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\hazelcast-all-1.9.3-RC.jar
+file.reference.httpclient-4.1.1.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\httpcomponents-client-4.1.1-bin\\httpcomponents-client-4.1.1\\lib\\httpclient-4.1.1.jar
+file.reference.httpclient-4.1.1.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\httpclient-4.1.1.jar
+file.reference.httpcore-4.1.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\httpcomponents-client-4.1.1-bin\\httpcomponents-client-4.1.1\\lib\\httpcore-4.1.jar
+file.reference.httpcore-4.1.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\httpcore-4.1.jar
+file.reference.log4j-1.2.16.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\apache-log4j-1.2.16\\apache-log4j-1.2.16\\log4j-1.2.16.jar
+file.reference.log4j-1.2.16.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\log4j-1.2.16.jar
+file.reference.mysql-connector-java-5.1.14-bin.jar=J:\\Sachin\\downloads\\mysql-connector-java-5.1.14\\mysql-connector-java-5.1.14\\mysql-connector-java-5.1.14-bin.jar
+file.reference.mysql-connector-java-5.1.14-bin.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\mysql-connector-java-5.1.14-bin.jar
+file.reference.smack.jar=J:\\Sachin\\downloads\\smack_3_1_0\\smack_3_1_0\\smack.jar
+file.reference.smack.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\smack.jar
+file.reference.smackx-debug.jar=J:\\Sachin\\downloads\\smack_3_1_0\\smack_3_1_0\\smackx-debug.jar
+file.reference.smackx-debug.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\smackx-debug.jar
+file.reference.smackx.jar=J:\\Sachin\\downloads\\smack_3_1_0\\smack_3_1_0\\smackx.jar
+file.reference.smackx.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\smackx.jar
+file.reference.stax-utils.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\apache-solr-1.3.0\\apache-solr-1.3.0\\lib\\stax-utils.jar
+file.reference.stax-utils.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\stax-utils.jar
+file.reference.wstx-asl-3.2.7.jar=J:\\Sachin\\SaroVeen Tech\\Self\\Recruit Manager\\Code\\libraries\\apache-solr-1.3.0\\apache-solr-1.3.0\\lib\\wstx-asl-3.2.7.jar
+file.reference.wstx-asl-3.2.7.jar-1=C:\\Documents and Settings\\suman.holani\\My Documents\\Google Talk Received Files\\Java Chat Bot Code\\libraries\\wstx-asl-3.2.7.jar
+includes=**
+jar.compress=false
+javac.classpath=\
+    ${file.reference.smack.jar}:\
+    ${file.reference.smackx-debug.jar}:\
+    ${file.reference.smackx.jar}:\
+    ${file.reference.hazelcast-1.9.3-RC.jar}:\
+    ${file.reference.hazelcast-all-1.9.3-RC.jar}:\
+    ${file.reference.log4j-1.2.16.jar}:\
+    ${file.reference.httpclient-4.1.1.jar}:\
+    ${file.reference.httpcore-4.1.jar}:\
+    ${file.reference.commons-logging-1.1.1.jar}:\
+    ${file.reference.apache-solr-solrj-1.3.0.jar}:\
+    ${file.reference.apache-solr-common-1.3.0.jar}:\
+    ${file.reference.commons-codec-1.3.jar}:\
+    ${file.reference.commons-io-1.3.1.jar}:\
+    ${file.reference.geronimo-stax-api_1.0_spec-1.0.1.jar}:\
+    ${file.reference.stax-utils.jar}:\
+    ${file.reference.wstx-asl-3.2.7.jar}:\
+    ${file.reference.commons-httpclient-3.1.jar}:\
+    ${file.reference.mysql-connector-java-5.1.14-bin.jar}:\
+    ${file.reference.commons-lang-2.6.jar}:\
+    ${file.reference.apache-solr-common-1.3.0.jar-1}:\
+    ${file.reference.apache-solr-solrj-1.3.0.jar-1}:\
+    ${file.reference.commons-codec-1.3.jar-1}:\
+    ${file.reference.commons-httpclient-3.1.jar-1}:\
+    ${file.reference.commons-io-1.3.1.jar-1}:\
+    ${file.reference.commons-lang-2.6.jar-1}:\
+    ${file.reference.commons-logging-1.1.1.jar-1}:\
+    ${file.reference.geronimo-stax-api_1.0_spec-1.0.1.jar-1}:\
+    ${file.reference.hazelcast-all-1.9.3-RC.jar-1}:\
+    ${file.reference.httpclient-4.1.1.jar-1}:\
+    ${file.reference.httpcore-4.1.jar-1}:\
+    ${file.reference.log4j-1.2.16.jar-1}:\
+    ${file.reference.mysql-connector-java-5.1.14-bin.jar-1}:\
+    ${file.reference.smack.jar-1}:\
+    ${file.reference.smackx-debug.jar-1}:\
+    ${file.reference.smackx.jar-1}:\
+    ${file.reference.stax-utils.jar-1}:\
+    ${file.reference.wstx-asl-3.2.7.jar-1}
+# Space-separated list of extra javac options
+javac.compilerargs=
+javac.deprecation=false
+javac.processorpath=\
+    ${javac.classpath}
+javac.source=1.5
+javac.target=1.5
+javac.test.classpath=\
+    ${javac.classpath}:\
+    ${build.classes.dir}:\
+    ${libs.junit.classpath}:\
+    ${libs.junit_4.classpath}
+javac.test.processorpath=\
+    ${javac.test.classpath}
+javadoc.additionalparam=
+javadoc.author=false
+javadoc.encoding=${source.encoding}
+javadoc.noindex=false
+javadoc.nonavbar=false
+javadoc.notree=false
+javadoc.private=false
+javadoc.splitindex=true
+javadoc.use=true
+javadoc.version=false
+javadoc.windowtitle=
+main.class=chat.Main
+manifest.file=manifest.mf
+meta.inf.dir=${src.dir}/META-INF
+platform.active=default_platform
+run.classpath=\
+    ${javac.classpath}:\
+    ${build.classes.dir}
+# Space-separated list of JVM arguments used when running the project
+# (you may also define separate properties like run-sys-prop.name=value instead of -Dname=value
+# or test-sys-prop.name=value to set system properties for unit tests):
+run.jvmargs=
+run.test.classpath=\
+    ${javac.test.classpath}:\
+    ${build.test.classes.dir}
+source.encoding=UTF-8
+src.dir=src
+test.src.dir=test

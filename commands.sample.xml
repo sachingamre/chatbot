@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : commands.xml
+    Created on : May 4, 2011, 12:30 PM
+    Author     : sachin.gamre
+    Description: Purpose of the document follows.
+-->
+<config>
+    <credentials>
+        <loginname>black.swan728</loginname>
+        <password>password132</password>
+    </credentials>
+    <commands>
+        <command>
+            <id>1</id>
+            <pattern>Help</pattern>
+            <description>Prints help</description>
+            <sourcetype>String</sourcetype>
+            <source>This is an online movie bot. Please type following commands to see movie schedules and book show
+			1. showmovie moviename, theater, date
+			2. showtheater theatername, date
+			3. bookshow showid
+			4. moviedetails moviename
+			5. nssync &lt;domain name&gt;	
+			</source>
+        </command>
+        <!-- <command>
+            <id>2</id>
+            <pattern>showmovie</pattern>
+            <description>Shows movie schedule</description>
+            <sourcetype>class</sourcetype>
+            <source>chat.test</source>
+        </command> -->
+		<command>
+            <id>2</id>
+            <pattern>showmovie</pattern>
+            <description>Shows movie schedule</description>
+            <sourcetype>sql</sourcetype>
+            <source>select * from movie_shows where moviename=? and theatername = ? and showdate = ?</source>
+        </command>
+		<command>
+            <id>15</id>
+            <pattern>showtheater</pattern>
+            <description>Shows movies schedule on particular theater</description>
+            <sourcetype>class</sourcetype>
+            <source>com.sachin.local.ShowTheater</source>
+        </command>
+		<command>
+            <id>16</id>
+            <pattern>moviedetails</pattern>
+            <description>Shows movies details</description>
+            <sourcetype>sql</sourcetype>
+            <source>select * from movie_details where mvname = ?</source>
+        </command>
+		<!-- <command>
+            <id>3</id>
+            <pattern>bookmovie</pattern>
+            <description>Prints help</description>
+            <sourcetype>class</sourcetype>
+            <source>chat.test</source>
+        </command> 
+		<command>
+            <id>4</id>
+            <pattern>httpquery</pattern>
+            <description>loads google website</description>
+            <sourcetype>http</sourcetype>
+            <source>http://www.google.com</source>
+        </command>
+		<command>
+            <id>5</id>
+            <pattern>solrquery</pattern>
+            <description>Loads data from Solr</description>
+            <sourcetype>solr</sourcetype>
+            <source>http://localhost:8080/solrindex</source>
+			<queryfields>moviename, theatername</queryfields>
+			<displayfields>showid,moviename,theatername</displayfields>
+			<defaultoperator>OR</defaultoperator> 
+        </command>
+		<command>
+            <id>6</id>
+            <pattern>dbquery</pattern>
+            <description>Loads data from Solr</description>
+            <sourcetype>sql</sourcetype>
+            <source>select * from admin</source>
+        </command>-->
+		<command>
+            <id>7</id>
+            <pattern>bookshow</pattern>
+            <description>Interactive query</description>
+            <sourcetype>interactive</sourcetype>
+            <source>chat.test</source>
+			<interactive>true</interactive>
+			<questions>
+				<question>Enter your name</question>
+				<question>Enter your mobile number</question>
+				<question>Enter your email ID</question>
+			</questions>
+			<action>email</action>	<!-- action can be email/sms/print/log/process -->
+			<emailid>sachin.gamre@gmail.com</emailid>
+			<donemessage>Thank you for submitting your details, we have sent an email on you mailid. Please check confirm your bookings</donemessage>
+        </command>
+	<command>
+            <id>8</id>
+            <pattern>nssync</pattern>
+            <description>Syncs static cache data to net storage</description>
+            <sourcetype>class</sourcetype>
+            <source>com.sachin.local.cache.akamai.NetStorage</source>
+        </command>	
+    </commands>
+</config>

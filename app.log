@@ -1,0 +1,192 @@
+15-04-2013@20:03:59 FATAL (     App.java:252)     - 
+java.lang.NoSuchMethodException: chat.test.<init>(com.sachin.core.ds.Command)
+	at java.lang.Class.getConstructor0(Class.java:2721)
+	at java.lang.Class.getConstructor(Class.java:1674)
+	at com.sachin.app.App.init(App.java:194)
+	at chat.Main.main(Main.java:30)
+15-04-2013@20:03:59 FATAL (     App.java:252)     - 
+java.lang.NoSuchMethodException: chat.test.<init>(com.sachin.core.ds.Command)
+	at java.lang.Class.getConstructor0(Class.java:2721)
+	at java.lang.Class.getConstructor(Class.java:1674)
+	at com.sachin.app.App.init(App.java:194)
+	at chat.Main.main(Main.java:30)
+15-04-2013@20:09:18 FATAL (     App.java:252)     - 
+java.lang.NoSuchMethodException: chat.test.<init>(com.sachin.core.ds.Command)
+	at java.lang.Class.getConstructor0(Class.java:2721)
+	at java.lang.Class.getConstructor(Class.java:1674)
+	at com.sachin.app.App.init(App.java:194)
+	at chat.Main.main(Main.java:30)
+15-04-2013@20:09:18 FATAL (     App.java:252)     - 
+java.lang.NoSuchMethodException: chat.test.<init>(com.sachin.core.ds.Command)
+	at java.lang.Class.getConstructor0(Class.java:2721)
+	at java.lang.Class.getConstructor(Class.java:1674)
+	at com.sachin.app.App.init(App.java:194)
+	at chat.Main.main(Main.java:30)
+15-04-2013@20:20:43 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion9065C978^chat^hello
+15-04-2013@20:20:43 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion9065C978^chat^hello
+15-04-2013@20:21:02 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+15-04-2013@20:21:02 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+15-04-2013@20:21:10 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^bookshow 111
+15-04-2013@20:21:10 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^bookshow 111
+15-04-2013@20:21:13 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^sachin
+15-04-2013@20:21:13 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^sachin
+15-04-2013@20:21:19 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^9892881554
+15-04-2013@20:21:19 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^9892881554
+15-04-2013@20:21:24 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^saching@glam.com
+15-04-2013@20:21:24 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^saching@glam.com
+15-04-2013@20:21:27 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com^chat^hello
+15-04-2013@20:21:27 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com^chat^hello
+15-04-2013@20:21:30 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+15-04-2013@20:21:30 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+15-04-2013@20:25:28 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com^chat^hello
+15-04-2013@20:25:28 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com^chat^hello
+15-04-2013@20:26:42 INFO  ( Chatter.java:102)     - new^appasaheb.sawant@gmail.com
+15-04-2013@20:26:42 INFO  ( Chatter.java:102)     - new^appasaheb.sawant@gmail.com
+15-04-2013@20:26:59 INFO  (ChatHandler.java:236)     - appasaheb.sawant@gmail.com/gmail.0C5A2FB6^chat^hi
+15-04-2013@20:26:59 INFO  (ChatHandler.java:236)     - appasaheb.sawant@gmail.com/gmail.0C5A2FB6^chat^hi
+15-04-2013@20:27:07 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^help
+15-04-2013@20:27:07 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^help
+15-04-2013@20:27:23 INFO  (ChatHandler.java:236)     - appasaheb.sawant@gmail.com^chat^1
+15-04-2013@20:27:23 INFO  (ChatHandler.java:236)     - appasaheb.sawant@gmail.com^chat^1
+15-04-2013@20:27:34 INFO  (ChatHandler.java:236)     - appasaheb.sawant@gmail.com^chat^3
+15-04-2013@20:27:34 INFO  (ChatHandler.java:236)     - appasaheb.sawant@gmail.com^chat^3
+15-04-2013@20:27:38 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^help
+15-04-2013@20:27:38 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^help
+15-04-2013@20:27:44 INFO  (ChatHandler.java:236)     - appasaheb.sawant@gmail.com^chat^3
+15-04-2013@20:27:44 INFO  (ChatHandler.java:236)     - appasaheb.sawant@gmail.com^chat^3
+15-04-2013@20:27:46 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^bookshow
+15-04-2013@20:27:46 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^bookshow
+15-04-2013@20:27:51 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^appa
+15-04-2013@20:27:51 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^appa
+15-04-2013@20:27:58 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^898989898
+15-04-2013@20:27:58 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^898989898
+15-04-2013@20:28:10 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^appa@gmail.com
+15-04-2013@20:28:10 INFO  (ChatHandler.java:216)     - appasaheb.sawant@gmail.com^chat^appa@gmail.com
+15-04-2013@20:30:16 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion9065C978^chat^Hello yaar
+15-04-2013@20:30:16 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion9065C978^chat^Hello yaar
+15-04-2013@20:30:29 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com^chat^hello
+15-04-2013@20:30:29 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com^chat^hello
+15-04-2013@20:33:03 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion9065C978^chat^sachin
+15-04-2013@20:33:03 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion9065C978^chat^sachin
+15-04-2013@20:33:10 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+15-04-2013@20:33:10 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+15-04-2013@23:45:33 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion1EA73E2B^chat^hello
+15-04-2013@23:45:33 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion1EA73E2B^chat^hello
+15-04-2013@23:45:38 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+15-04-2013@23:45:38 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+16-04-2013@09:19:07 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^help
+16-04-2013@09:19:07 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^help
+16-04-2013@09:19:14 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync mysite
+16-04-2013@09:19:14 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync mysite
+16-04-2013@09:25:16 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^help
+16-04-2013@09:25:16 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^help
+16-04-2013@09:25:20 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync mysite
+16-04-2013@09:25:20 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync mysite
+16-04-2013@09:29:46 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync
+16-04-2013@09:29:46 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync
+16-04-2013@09:30:08 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+16-04-2013@09:30:08 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+16-04-2013@09:30:51 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync mysite
+16-04-2013@09:30:51 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync mysite
+16-04-2013@09:32:16 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:32:16 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:34:18 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:34:18 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:35:10 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:35:10 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:36:25 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:36:25 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:49:12 INFO  ( Chatter.java:102)     - new^sachin.gamre@gmail.com
+16-04-2013@09:49:12 INFO  ( Chatter.java:102)     - new^sachin.gamre@gmail.com
+16-04-2013@09:49:12 INFO  ( Chatter.java:102)     - new^appasaheb.sawant@gmail.com
+16-04-2013@09:49:12 INFO  ( Chatter.java:102)     - new^appasaheb.sawant@gmail.com
+16-04-2013@09:49:12 INFO  ( Chatter.java:102)     - new^nrvdalal.22@gmail.com
+16-04-2013@09:49:12 INFO  ( Chatter.java:102)     - new^nrvdalal.22@gmail.com
+16-04-2013@09:49:12 INFO  ( Chatter.java:102)     - new^csmodi@gmail.com
+16-04-2013@09:49:12 INFO  ( Chatter.java:102)     - new^csmodi@gmail.com
+16-04-2013@09:49:25 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:49:25 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:50:12 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:50:12 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:50:55 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+16-04-2013@09:50:55 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion2E09858A^chat^nssync
+17-04-2013@19:22:55 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion64E9DD50^chat^help
+17-04-2013@19:22:55 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion64E9DD50^chat^help
+17-04-2013@19:23:10 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync glam
+17-04-2013@19:23:10 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync glam
+17-04-2013@19:23:20 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync
+17-04-2013@19:23:20 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync
+17-04-2013@19:24:33 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion64E9DD50^chat^nssync
+17-04-2013@19:24:33 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion64E9DD50^chat^nssync
+17-04-2013@19:24:40 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync glam
+17-04-2013@19:24:40 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync glam
+23-04-2013@18:54:30 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion71ECB092^chat^hello
+23-04-2013@18:54:30 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com/orion71ECB092^chat^hello
+23-04-2013@18:54:36 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+23-04-2013@18:54:36 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+23-04-2013@18:54:40 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync
+23-04-2013@18:54:40 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync
+23-04-2013@18:54:47 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync glam
+23-04-2013@18:54:47 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync glam
+23-04-2013@19:09:07 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion71ECB092^chat^nssync www.glam.com <http://www.glam.com>
+23-04-2013@19:09:07 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion71ECB092^chat^nssync www.glam.com <http://www.glam.com>
+23-04-2013@19:18:38 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion71ECB092^chat^nssync www.glam.com <http://www.glam.com>
+23-04-2013@19:18:38 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion71ECB092^chat^nssync www.glam.com <http://www.glam.com>
+23-04-2013@19:22:11 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync http://www.glam.com
+23-04-2013@19:22:11 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync http://www.glam.com
+23-04-2013@19:37:39 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync www.glam.com/mypost/article1/ <http://www.glam.com/mypost/article1/>
+23-04-2013@19:37:39 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^nssync www.glam.com/mypost/article1/ <http://www.glam.com/mypost/article1/>
+23-04-2013@19:43:11 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion71ECB092^chat^nssync www.glam.com <http://www.glam.com>
+23-04-2013@19:43:11 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com/orion71ECB092^chat^nssync www.glam.com <http://www.glam.com>
+10-05-2013@14:56:44 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+10-05-2013@14:56:44 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+10-05-2013@14:56:48 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^bookshow 11
+10-05-2013@14:56:48 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^bookshow 11
+10-05-2013@16:09:44 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+10-05-2013@16:09:44 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+10-05-2013@16:09:50 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^bookshow 1111
+10-05-2013@16:09:50 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^bookshow 1111
+10-05-2013@16:09:54 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^sachin
+10-05-2013@16:09:54 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^sachin
+10-05-2013@16:10:00 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^9892881665
+10-05-2013@16:10:00 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^9892881665
+10-05-2013@16:10:15 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^saching@glam.com
+10-05-2013@16:10:15 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^saching@glam.com
+22-07-2013@23:14:40 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com^chat^hello
+22-07-2013@23:14:40 INFO  (ChatHandler.java:236)     - sachin.gamre@gmail.com^chat^hello
+22-07-2013@23:14:43 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+22-07-2013@23:14:43 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^help
+22-07-2013@23:14:57 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^bookshow 123
+22-07-2013@23:14:57 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^bookshow 123
+22-07-2013@23:15:02 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^sachin
+22-07-2013@23:15:02 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^sachin
+22-07-2013@23:15:08 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^9892881554
+22-07-2013@23:15:08 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^9892881554
+22-07-2013@23:15:14 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^saching@glam.com
+22-07-2013@23:15:14 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^saching@glam.com
+02-08-2013@00:14:57 FATAL (     App.java:252)     - 
+java.lang.ClassNotFoundException: com.sachin.local.cache.webserver.Webserver
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at com.sachin.app.App.init(App.java:109)
+	at chat.Main.main(Main.java:30)
+02-08-2013@00:14:57 FATAL (     App.java:252)     - 
+java.lang.ClassNotFoundException: com.sachin.local.cache.webserver.Webserver
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at com.sachin.app.App.init(App.java:109)
+	at chat.Main.main(Main.java:30)
+02-08-2013@00:18:33 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^rsweb app268.glam.colo
+02-08-2013@00:18:33 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^rsweb app268.glam.colo
+02-08-2013@00:28:46 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^rsweb app268.glam.colo
+02-08-2013@00:28:46 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^rsweb app268.glam.colo

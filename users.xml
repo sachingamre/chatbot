@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : users.xml
+    Created on : Sep 4, 2013, 12:46 PM
+    Author     : sachin.gamre
+    Description: Stores users, their credentials and permissions
+-->
+<acl>
+	<auth>true</auth>
+	<users>
+		<user>
+			<login>sachin.gamre@gmail.com</login>
+			<password>123456</password>
+			<commands>
+				<pattern>Help</pattern>
+				<pattern>showtheater</pattern>				
+			</commands>
+		</user>
+		<user>
+			<login>swati.auty@gmail.com</login>
+			<password>1234567</password>
+			<commands>
+				<pattern>Help</pattern>
+				<pattern>showtheater</pattern>				
+			</commands>
+		</user>
+	</users>
+</acl>

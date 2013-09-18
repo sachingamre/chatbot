@@ -1,0 +1,29 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.sachin.core.interfaces;
+
+import java.util.List;
+
+/**
+ *
+ * @author suman.holani
+ */
+public interface InteractiveForm
+{
+        //diff quiz  will hav diff
+        public static int level=1; //number fo questions
+        public static int max_question=10;
+
+
+
+        void setpattern();
+        int getpattern(); //level * maxquestion
+        List getQuestions(int level,int number); //level is 1 bydefault
+        void pushAnswers(String resultstore);
+
+
+
+}

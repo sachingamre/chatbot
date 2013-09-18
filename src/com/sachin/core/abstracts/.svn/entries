@@ -1,0 +1,28 @@
+10
+
+dir
+0
+svn+ssh://ecomm@192.168.1.98/home/sachin/work/proj_repos/chatbot/src/com/sachin/core/abstracts
+svn+ssh://ecomm@192.168.1.98/home/sachin/work/proj_repos
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+5994a91a-f62c-460f-a496-fd3fb25ac84f
+

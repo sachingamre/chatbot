@@ -1,0 +1,125 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package chat;
+
+//import com.sachin.core.interfaces.IDataSource;
+import com.sachin.core.utils.Utils;
+//import com.sachin.local.games.GameFinder;
+import com.sachin.local.games.GameFinder;
+
+
+
+/**
+ *
+ * @author sachin.gamre
+ */
+public class test {
+
+    public void showName(String name[]) {
+        System.out.println("Name is " + name[0]) ;
+    }
+
+    public String pullData(String[] args, int page, int totalRecords) {
+        System.out.println("I am into test.pullData") ;
+        Utils.printArray(args);
+        // System.out.println("This is Sachin here") ;
+        return "pullData" ;
+    }
+
+    public String pullAds() {
+        return "ads" ;
+    }
+
+    public static void main(String[] args) {
+        GameFinder gf = new GameFinder() ;
+        gf.pullData(new String[]{"genre", "action"}, 1, 10) ;
+        
+         /* RestClient restClient = new RestClient("http://172.16.50.60:8983/solr/zapaksite/select") ;
+                restClient.addParam("q", "contextpath_t:arcade") ;
+                try {
+                    restClient.execute(RequestMethod.GET) ;
+                    String output = restClient.getResponse() ;
+                    SacXMLParser sxp = new SacXMLParser(output) ;
+                    List<SacXMLObject> gameDocuments = sxp.getDocuments("doc") ;
+                    System.out.println("----------------------" + gameDocuments) ;
+
+                    
+
+                    
+                    // parse the XML output, format it and show it to client
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Document doc = dBuilder.parse(new ByteArrayInputStream(output.getBytes())) ;
+                    doc.getDocumentElement().normalize();
+
+                    //get the root elememt
+                    Element docEle = doc.getDocumentElement() ;
+
+                    //get a nodelist of <command> elements
+                    NodeList nl = docEle.getElementsByTagName("command") ;
+                    if(nl != null && nl.getLength() > 0) {
+                        for(int i = 0 ; i < nl.getLength();i++) {
+
+                            //get the Command instance from command elements command element
+                            Command cmd = getCommand((Element)nl.item(i));
+                            commandList.add(cmd);
+                        }
+                    }
+                    
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace() ;
+                    App.logger.info(ex.getMessage());
+                }*/
+        System.exit(100);
+        /*
+        int i = 0;
+        int j = 10;
+        
+        System.out.println(++i) ;
+        //System.exit(100) ;
+
+        for(i=0,j=10; i<=10 && j>=5; i++,j--) {
+            System.out.println("i = " + i + " j = " + j) ;
+        }
+        //System.exit(100) ;
+        SolrHandler sHandle = new SolrHandler("http://localhost:8080/solrindex","moviename,theatername", "showid,moviename,theatername,theateraddress,showtimings", "OR") ;
+        //sHandle.createSampleServer() ;
+
+        sHandle.pullData(args, 0, 10) ;
+        */
+        /*
+        HttpHandler httpH = new HttpHandler("http://www.google.com") ;
+        String response = httpH.getResponse() ;
+        System.out.println(response) ;
+
+        
+        String[] messageParts = "Show shor timings inorbit 2011-05-11".split("\\s+") ;
+        Utils.printArray(messageParts) ;
+        messageParts = Arrays.copyOfRange(messageParts, 1, messageParts.length) ;
+        Utils.printArray(messageParts) ;
+        */
+        /*
+        System.out.println(Utils.match("Show (.+) timings (.+) (\\d\\d\\d\\d\\-\\d\\d\\-\\d\\d)", "Show shor in the city timings inorbit 2011-04-10")) ;
+        // String cmd = "show shor in the city timings inorbit 2011-05-10" ;
+        String cmd = "show shor timings inorbit 2011-10-11" ;
+        // Pattern p = Pattern.compile("Show (.+) timings (.+) (\\d\\d\\d\\d-\\d\\d-\\d\\d)", Pattern.CASE_INSENSITIVE) ;
+        Pattern p = Pattern.compile("Show(.+)timings(.+)(\\d\\d\\d\\d\\-\\d\\d\\-\\d\\d)", Pattern.CASE_INSENSITIVE) ;
+
+        Matcher matcher = p.matcher(cmd);
+        System.out.println(matcher.groupCount()) ;
+
+        while(matcher.find()) {
+            for(int i = 1; i <= matcher.groupCount(); i++) {
+                System.out.println(matcher.group(i)) ;
+            }
+        }
+        System.out.println(matcher.matches()) ;
+        */
+    }
+
+
+}

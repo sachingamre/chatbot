@@ -1,0 +1,117 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.sachin.local;
+
+import com.sachin.core.api.http.HttpRestClient;
+import com.sachin.core.ds.Command;
+import com.sachin.core.interfaces.Interactivity;
+import com.sachin.core.utils.Utils;
+import java.net.MalformedURLException;
+import java.net.URL;
+// import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+/**
+ *
+ * @author suman.holani
+ */
+public class Quiz extends Interactivity {
+
+    //diff quiz  will hav diff
+    // public static int level=1; //number fo questions
+    // public static int max_question=10;
+    private static Quiz mqInstance = null;
+
+    //constructor of movie quiz called by runtime polymorphism on the basis of command source found
+    public Quiz(Command command) {
+        super(command);
+        System.out.println("After MovieQuiz constructor");
+        /*
+        if(!_commandQuestions.containsKey(command.pattern)) //if there is any command
+        {
+        List questions =  this.getQuestions(level,this.getpattern(1));
+        int totalQuestions = questions.size();
+        doneMessage = command.doneMessage;
+
+        HashMap tmpCmd = new HashMap();
+        tmpCmd.put("questions", questions);
+        tmpCmd.put("question_counter", totalQuestions);
+
+        _commandQuestions.put(command.pattern, tmpCmd);
+        }
+         */
+    }
+
+    public static Quiz getInstance(Command command) {
+        if (mqInstance == null) {
+            mqInstance = new Quiz(command);
+        }
+        return mqInstance;
+    }
+
+    public int getLevel() {
+        return 1;
+    }
+
+    public void setNumber(int questionCount) {
+    }
+
+    public int getNumber(int level) {
+        return 1;
+    }
+
+    public List getQuestions(int level, int number) {
+        List<String> list = new ArrayList();
+
+        String str = null;
+        //rest API call to get question
+        //example http://192.168.1.51/zquiz/quiz/getquizQuestion?uid=9320370793&sessionid=12344567
+
+        //URL url = new URL("http://192.168.1.51/zquiz/quiz/getquizQuestion?");
+        URL url = null;
+        try {
+            url = new URL("http://192.168.1.98/questiondb.php");
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Quiz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //String params = "{\"uid\":9320370793,\"sessionid\":12344567}";
+        String params = "";
+        str = HttpRestClient.restPostClient(url, params);
+        System.out.println("Response " + str);
+
+        // JSONArray json = (JSONArray) new JSONParser().parse(str);
+        //JSONObject json = (JSONObject) new JSONParser().parse(str);
+
+
+
+        JSONObject json = (JSONObject) JSONValue.parse(str) ;
+        JSONArray jsonarray = (JSONArray)json.get("questions");
+
+        //boolean addAll = list.addAll(json.values());
+
+        list.addAll(jsonarray);
+
+
+        // list.add((String) json.get("questions"));
+         //System.out.println("printing data"+json.get("questions"));
+
+         System.out.println("printing data"+json.size());
+
+
+        return list;
+    }
+
+    public void pushAnswers(String resultstore) {
+        //rest api call push data
+    }
+}
