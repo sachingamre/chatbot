@@ -6,10 +6,18 @@
     Description: Purpose of the document follows.
 -->
 <config>
+    <!-- Google Bot's login credentials -->
     <credentials>
         <loginname>black.swan728</loginname>
         <password>password132</password>
     </credentials>
+    <!-- If user authentication is enabled -->
+    <auth>yes</auth>
+    <!-- If application should follow the acl set in users section -->
+    <acl>yes</acl>
+    <!--
+	Available commands.	
+    -->
     <commands>
         <command>
             <id>1</id>
@@ -128,4 +136,22 @@
             <source>com.sachin.local.webserver.Webserver</source>
         </command>	
     </commands>
+	<users>
+		<user>
+			<login>sachin.gamre@gmail.com</login>
+			<password>123456</password>
+			<commands>
+				<pattern>Help</pattern>
+				<pattern>showtheater</pattern>				
+			</commands>
+		</user>
+		<user>
+			<login>swati.auty@gmail.com</login>
+			<password>1234567</password>
+			<commands>
+				<pattern>Help</pattern>
+				<pattern>showtheater</pattern>				
+			</commands>
+		</user>
+	</users>
 </config>
