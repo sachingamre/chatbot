@@ -190,3 +190,51 @@ java.lang.ClassNotFoundException: com.sachin.local.cache.webserver.Webserver
 02-08-2013@00:18:33 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^rsweb app268.glam.colo
 02-08-2013@00:28:46 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^rsweb app268.glam.colo
 02-08-2013@00:28:46 INFO  (ChatHandler.java:216)     - sachin.gamre@gmail.com^chat^rsweb app268.glam.colo
+26-09-2013@00:45:36 FATAL (     App.java:268)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.ConfigLoader.parseDocument(ConfigLoader.java:136)
+	at com.sachin.core.loaders.ConfigLoader.<init>(ConfigLoader.java:48)
+	at com.sachin.app.App.init(App.java:88)
+	at chat.Main.main(Main.java:31)
+26-09-2013@00:45:36 FATAL (     App.java:268)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.ConfigLoader.parseDocument(ConfigLoader.java:136)
+	at com.sachin.core.loaders.ConfigLoader.<init>(ConfigLoader.java:48)
+	at com.sachin.app.App.init(App.java:88)
+	at chat.Main.main(Main.java:31)
+26-09-2013@01:00:27 FATAL (     App.java:268)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.ConfigLoader.parseDocument(ConfigLoader.java:137)
+	at com.sachin.core.loaders.ConfigLoader.<init>(ConfigLoader.java:48)
+	at com.sachin.app.App.init(App.java:88)
+	at chat.Main.main(Main.java:31)
+26-09-2013@01:00:27 FATAL (     App.java:268)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.ConfigLoader.parseDocument(ConfigLoader.java:137)
+	at com.sachin.core.loaders.ConfigLoader.<init>(ConfigLoader.java:48)
+	at com.sachin.app.App.init(App.java:88)
+	at chat.Main.main(Main.java:31)
+26-09-2013@01:01:13 FATAL (     App.java:268)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.ConfigLoader.parseDocument(ConfigLoader.java:137)
+	at com.sachin.core.loaders.ConfigLoader.<init>(ConfigLoader.java:48)
+	at com.sachin.app.App.init(App.java:88)
+	at chat.Main.main(Main.java:31)
+26-09-2013@01:01:13 FATAL (     App.java:268)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.ConfigLoader.parseDocument(ConfigLoader.java:137)
+	at com.sachin.core.loaders.ConfigLoader.<init>(ConfigLoader.java:48)
+	at com.sachin.app.App.init(App.java:88)
+	at chat.Main.main(Main.java:31)
+26-09-2013@01:03:43 FATAL (     App.java:268)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.ConfigLoader.parseDocument(ConfigLoader.java:138)
+	at com.sachin.core.loaders.ConfigLoader.<init>(ConfigLoader.java:48)
+	at com.sachin.app.App.init(App.java:88)
+	at chat.Main.main(Main.java:31)
+26-09-2013@01:03:43 FATAL (     App.java:268)     - 
+java.lang.NullPointerException
+	at com.sachin.core.loaders.ConfigLoader.parseDocument(ConfigLoader.java:138)
+	at com.sachin.core.loaders.ConfigLoader.<init>(ConfigLoader.java:48)
+	at com.sachin.app.App.init(App.java:88)
+	at chat.Main.main(Main.java:31)

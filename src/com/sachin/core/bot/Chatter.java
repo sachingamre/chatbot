@@ -32,6 +32,7 @@ public class Chatter {
     public static Roster roster ;
     final static String domain = "gmail.com" ;
     private static String dbKey = null ;
+    private boolean aclEnabled = false;
 
     /**
      * Constructor
@@ -49,7 +50,7 @@ public class Chatter {
             config.setSendPresence(true);
             config.setReconnectionAllowed(true);
             config.setDebuggerEnabled(false);
-            
+
             connection = new XMPPConnection(config);
             connection.connect();
         }
@@ -60,7 +61,7 @@ public class Chatter {
 
     /**
      * Login to gtalk server
-     * 
+     *
      * @param loginname
      * @param password
      */
@@ -87,7 +88,7 @@ public class Chatter {
     /**
      * Manager friends and friends request
      * Sets counter for total friends and online friends
-     * 
+     *
      */
     public void manageFriends() {
         roster = connection.getRoster();
@@ -114,7 +115,7 @@ public class Chatter {
     }
 
     private void _updateFriendsCountToDb() {
-        
+
     }
 
     /*
@@ -144,7 +145,7 @@ public class Chatter {
         });
 
         System.out.println("\n\n Total Buddy(ies): " + totalFriends) ;
-        
+
         //for(RosterEntry r:entries)
         //{
         //    try {
@@ -156,7 +157,7 @@ public class Chatter {
         //        Logger.getLogger(Chatter.class.getName()).log(Level.SEVERE, null, ex);
          //   }
        // }
-        
+
     }
 
     public void manageRequests() {
@@ -204,9 +205,9 @@ public class Chatter {
         connection.disconnect() ;
     }
 
-    /** 
+    /**
      * Rotate by shifting a character right at a time.
-     */ 
+     */
     private static String rotate(String input) {
         return input.substring(1) + input.charAt(0);
     }

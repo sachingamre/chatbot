@@ -35,8 +35,7 @@ public class Main {
             String msg = "";
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             while ((msg = br.readLine()).equals("exit")) {
-                App.chatter.logout();
-                System.exit(0);
+                App.close();
             }
         }
         catch (IOException ex) {

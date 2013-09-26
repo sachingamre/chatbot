@@ -8,8 +8,8 @@
 <config>
     <!-- Google Bot's login credentials -->
     <credentials>
-        <loginname>black.swan728</loginname>
-        <password>password132</password>
+        <loginname>glamchatter</loginname>
+        <password>glam@132</password>
     </credentials>
     <!-- If user authentication is enabled -->
     <auth>yes</auth>

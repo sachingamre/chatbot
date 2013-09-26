@@ -13,6 +13,7 @@ import com.sachin.core.bot.CustomFileHandler;
 import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 import com.sachin.core.loaders.CommandLoader;
+import com.sachin.core.loaders.ConfigLoader;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,6 +28,10 @@ import org.apache.log4j.Logger;
  * @author sachin
  */
 public class App {
+
+    public static boolean ENABLE_USER_AUTH = false;
+
+    public static boolean ENABLE_USER_ACL = false;
 
     // We are using log4j for logging. So getting instance of log4j logger
     public static Logger logger = Logger.getLogger("com");
@@ -68,23 +73,43 @@ public class App {
      */
     public static void init() {
         try {
+
+            // Read config XML file and load it.
+            ConfigLoader configLoader = new ConfigLoader("commands.xml");
+
+            // Get Bot credentials
+            HashMap<String, String> credentials = configLoader.getCredentials();
+            System.out.println("Loginname " + credentials.get("loginname"));
+            System.out.println("Password " + credentials.get("password"));
+
+            // Load Commands list
+            List commandList = configLoader.getCommands();
+
+            // Load Users
+            List userList = configLoader.getUsers();
+
+            // Check if user auth is enabled.
+            ENABLE_USER_AUTH = configLoader.isAuthEnabled();
+
+            // Check if user acl is enabled.
+            ENABLE_USER_ACL = configLoader.isAclEnabled();
+
+            // Read number of records to be shown on each page.
             PAGE_RECORDS = Integer.parseInt(App.config.getString("pagerecords"));
-
-            //starting chatter
-
+            System.exit(0);
+            //Starting chatter
             // Login to the gmail through BOT
             chatter = new Chatter();
-            chatter.login(App.config.getString("loginname"), App.config.getString("password"));
+            chatter.login(credentials.get("loginname"), credentials.get("password"));
             chatter.setStatus("Available");
             chatter.manageFriends();
             chatter.addChatListener();
 
             //loading commands
 
-            // Read XML file and load it in the list
-            CommandLoader commandLoader = new CommandLoader("commands.xml");
+            //CommandLoader commandLoader = new CommandLoader("commands.xml");
             //CommandLoader commandLoader = new CommandLoader(App.config.getString("commandslist"));
-            List commandList = commandLoader.getList();
+
 
             // loop through the list and create data source object instances for each source class
             Iterator it = commandList.iterator();
@@ -257,5 +282,13 @@ public class App {
         catch (Exception ex) {
             Logger.getLogger(App.class.getName()).log(Level.FATAL, null, ex);
         }
+    }
+
+    /**
+     * Closes the application
+     */
+    public static void close() {
+        chatter.logout();
+        System.exit(0);
     }
 }
