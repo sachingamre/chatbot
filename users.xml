@@ -20,7 +20,7 @@
 			<login>swati.auty@gmail.com</login>
 			<password>1234567</password>
 			<commands>
-				<pattern>Help</pattern>
+				<pattern>help</pattern>
 				<pattern>showtheater</pattern>				
 			</commands>
 		</user>
