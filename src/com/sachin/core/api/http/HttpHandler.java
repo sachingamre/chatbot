@@ -22,17 +22,17 @@ import org.apache.http.impl.client.DefaultHttpClient;
  * @author sachin
  */
 public class HttpHandler implements Serializable, IDataSource {
-    private String _URL ;
+    private String _url ;
 
     public HttpHandler(String url) {
-        _URL = url ;
+        _url = url ;
     }
 
     public String pullData(String command, String[] args, int page, int totalRecords) {
         HttpClient httpclient = new DefaultHttpClient();
         String responseBody = "" ;
         try {
-            HttpGet httpget = new HttpGet(_URL);
+            HttpGet httpget = new HttpGet(_url);
 
             System.out.println("executing request " + httpget.getURI());
 

@@ -34,8 +34,12 @@ public class Main {
             // Read exit from command prompt to halt the application.
             String msg = "";
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            while ((msg = br.readLine()).equals("exit")) {
-                App.close();
+            while ((msg = br.readLine()).length() > 0) {
+                if (msg.equalsIgnoreCase("exit")) {
+                    App.close();
+                } else if (msg.equalsIgnoreCase("reload")) {
+                    App.reloadConfig();
+                }
             }
         }
         catch (IOException ex) {

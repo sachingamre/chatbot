@@ -39,6 +39,11 @@ public class App {
     // We are using log4j for logging. So getting instance of log4j logger
     public static Logger logger = Logger.getLogger("com");
 
+    /**
+     * Stores bot's login credentials.
+     */
+    public static HashMap<String, String> CREDENTIALS = new HashMap<String, String>();
+
     // Map stores Users
     public static Map<String, User> USERS = Hazelcast.getMap("users");
 
@@ -87,12 +92,15 @@ public class App {
     public static void init() {
         try {
 
+            loadConfig();
+
+            /*
             // Read config XML file and load it.
-            ConfigLoader configLoader = new ConfigLoader("commands.xml");
+            ConfigLoader configLoader = new ConfigLoader("config.xml");
 
             // Get Bot credentials
-            HashMap<String, String> credentials = configLoader.getCredentials();
-            if("".equals(credentials.get("loginname")) || credentials.get("loginname") == null || "".equals(credentials.get("password")) || credentials.get("password") == null) {
+            CREDENTIALS = configLoader.getCredentials();
+            if("".equals(CREDENTIALS.get("loginname")) || CREDENTIALS.get("loginname") == null || "".equals(CREDENTIALS.get("password")) || CREDENTIALS.get("password") == null) {
                 System.out.println("Bot login password is missing, kindly update it in the config for application to start");
                 System.exit(1);
             }
@@ -112,11 +120,12 @@ public class App {
 
             // Read number of records to be shown on each page.
             PAGE_RECORDS = Integer.parseInt(App.config.getString("pagerecords"));
+            */
 
             //Starting chatter
             // Login to the gmail through BOT
             chatter = new Chatter();
-            chatter.login(credentials.get("loginname"), credentials.get("password"));
+            chatter.login(CREDENTIALS.get("loginname"), CREDENTIALS.get("password"));
             chatter.setStatus("Available");
             chatter.manageFriends();
             chatter.addChatListener();
@@ -127,6 +136,45 @@ public class App {
         }
         catch (Exception ex) {
             Logger.getLogger(App.class.getName()).log(Level.FATAL, null, ex);
+        }
+    }
+
+    public static void loadConfig() throws FileNotFoundException {
+        // Read config XML file and load it.
+            ConfigLoader configLoader = new ConfigLoader("config.xml");
+
+            // Get Bot credentials
+            CREDENTIALS = configLoader.getCredentials();
+            if("".equals(CREDENTIALS.get("loginname")) || CREDENTIALS.get("loginname") == null || "".equals(CREDENTIALS.get("password")) || CREDENTIALS.get("password") == null) {
+                System.out.println("Bot login password is missing, kindly update it in the config for application to start");
+                System.exit(1);
+            }
+
+            // Load Commands list
+            List commandList = configLoader.getCommands();
+            loadCommands(commandList);
+
+            // Check if user auth is enabled.
+            ENABLE_USER_AUTH = configLoader.isAuthEnabled();
+
+            // Check if user acl is enabled.
+            ENABLE_USER_ACL = configLoader.isAclEnabled();
+
+            if(ENABLE_USER_ACL || ENABLE_USER_AUTH) {
+                // Load Users
+                USERS = configLoader.getUsers();
+            }
+
+            // Read number of records to be shown on each page.
+            PAGE_RECORDS = Integer.parseInt(App.config.getString("pagerecords"));
+    }
+
+    public static void reloadConfig() {
+        try {
+            loadConfig();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Missing configuration file");
+            System.exit(1);
         }
     }
 
