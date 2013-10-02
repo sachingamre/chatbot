@@ -190,8 +190,8 @@ public class Chatter {
 
             @Override
             public void chatCreated(Chat chat, boolean createdLocally) {
+                System.out.println("Created locally ---------------------------------------" + createdLocally);
                 if (!createdLocally) {
-                    // System.out.println("Addition chat listener for " + chat.getParticipant()) ;
                     chat.addMessageListener(new ChatHandler(chat.getParticipant()));
                 }
             }

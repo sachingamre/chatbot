@@ -12,7 +12,7 @@
         <password>glam@132</password>
     </credentials>
     <!-- If user authentication is enabled -->
-    <auth>yes</auth>
+    <auth>no</auth>
     <!-- If application should follow the acl set in users section -->
     <acl>yes</acl>
     <!--
@@ -141,7 +141,7 @@
 			<login>sachin.gamre@gmail.com</login>
 			<password>123456</password>
 			<commands>
-				<pattern>Help</pattern>
+				<pattern>startweb</pattern>
 				<pattern>showtheater</pattern>				
 			</commands>
 		</user>

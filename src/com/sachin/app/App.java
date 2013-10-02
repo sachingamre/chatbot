@@ -11,9 +11,10 @@ import com.sachin.core.api.solr.SolrHandler;
 import com.sachin.core.bot.Chatter;
 import com.sachin.core.bot.CustomFileHandler;
 import com.sachin.core.ds.Command;
+import com.sachin.core.ds.User;
 import com.sachin.core.interfaces.IDataSource;
-import com.sachin.core.loaders.CommandLoader;
 import com.sachin.core.loaders.ConfigLoader;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,8 +34,20 @@ public class App {
 
     public static boolean ENABLE_USER_ACL = false;
 
+    public static int sessionTimeout = 86400;   // 1 hour in seconds
+
     // We are using log4j for logging. So getting instance of log4j logger
     public static Logger logger = Logger.getLogger("com");
+
+    // Map stores Users
+    public static Map<String, User> USERS = Hazelcast.getMap("users");
+
+    /**
+     * Map stores Session timer for authorized users.
+     * Record structure <sachingamre@gmail.com,12345677>.
+     *
+     */
+    public static Map<String, Integer> AUTHORIZED_USERS = Hazelcast.getMap("authorized_users");
 
     // Map stores Precooked (instantiated) datasources for each command
     // The Map stores the class instances against each command pattern
@@ -79,14 +92,17 @@ public class App {
 
             // Get Bot credentials
             HashMap<String, String> credentials = configLoader.getCredentials();
-            System.out.println("Loginname " + credentials.get("loginname"));
-            System.out.println("Password " + credentials.get("password"));
+            if("".equals(credentials.get("loginname")) || credentials.get("loginname") == null || "".equals(credentials.get("password")) || credentials.get("password") == null) {
+                System.out.println("Bot login password is missing, kindly update it in the config for application to start");
+                System.exit(1);
+            }
 
             // Load Commands list
             List commandList = configLoader.getCommands();
+            loadCommands(commandList);
 
             // Load Users
-            List userList = configLoader.getUsers();
+            USERS = configLoader.getUsers();
 
             // Check if user auth is enabled.
             ENABLE_USER_AUTH = configLoader.isAuthEnabled();
@@ -96,7 +112,7 @@ public class App {
 
             // Read number of records to be shown on each page.
             PAGE_RECORDS = Integer.parseInt(App.config.getString("pagerecords"));
-            System.exit(0);
+
             //Starting chatter
             // Login to the gmail through BOT
             chatter = new Chatter();
@@ -104,77 +120,89 @@ public class App {
             chatter.setStatus("Available");
             chatter.manageFriends();
             chatter.addChatListener();
+        }
+        catch(FileNotFoundException fe) {
+            System.out.println("Configuration file is missing.");
+            System.exit(1);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(App.class.getName()).log(Level.FATAL, null, ex);
+        }
+    }
 
-            //loading commands
+    /**
+     * Method reads supported commands list and prepares a Hazelcast Map with instance of the commands object.
+     *
+     * @param List commandList List of supported commands.
+     *
+     * @return void
+     */
+    public static void loadCommands(List commandList) {
 
-            //CommandLoader commandLoader = new CommandLoader("commands.xml");
-            //CommandLoader commandLoader = new CommandLoader(App.config.getString("commandslist"));
+        // loop through the list and create data source object instances for each source class
+        Iterator it = commandList.iterator();
+        AllowedSourceTypes stype;
+        HashMap <String,Object>tempMap;
+
+        // Loop till there is no command left to process
+        while (it.hasNext()) {
+            try {
+                Command cmd = (Command) it.next();
+                stype = AllowedSourceTypes.valueOf(cmd.sourceType.toUpperCase());
+
+                switch (stype) {
+                    /**
+                      * CLASS source type assumes that the data will be loaded from a java class
+                      * Which will be present in com.sachin.local. Class in the com.sachin.local
+                      * should implement the IDataSource inteface
+                      */
+                    case CLASS:
+
+                        // Load the instance of the class mentioned in the datasource
+                        System.out.println("pattern " + cmd.pattern);
+                        System.out.println("source " + cmd.source);
+                        Class c = ClassLoader.getSystemClassLoader().loadClass(cmd.source);
+                        //Class c = CustomClassLoader.getInstance().loadClass(cmd.source);
+                        IDataSource ids = (IDataSource) c.newInstance();
+                        tempMap = new HashMap();
+                        tempMap.put("type", cmd.sourceType);
+                        tempMap.put("instance", ids);
+                        tempMap.put("usage", cmd.usage);
+                        COMMANDS.put(cmd.pattern, tempMap);
+                        break;
 
 
-            // loop through the list and create data source object instances for each source class
-            Iterator it = commandList.iterator();
-            AllowedSourceTypes stype;
-            HashMap <String,Object>tempMap;
+                    /**
+                      * HTTP source type assumes that the data will be loaded from the http URL.
+                      */
+                    case HTTP:
+                        // load the data from HTTP URL
+                        System.out.println("pattern " + cmd.pattern);
+                        System.out.println("source " + cmd.source);
+                        HttpHandler httpHandler = new HttpHandler(cmd.source);
+                        tempMap = new HashMap();
+                        tempMap.put("type", cmd.sourceType);
+                        tempMap.put("instance", httpHandler);
+                        tempMap.put("usage", cmd.usage);
+                        COMMANDS.put(cmd.pattern, tempMap);
+                        break;
 
-            // Loop till there is no command left to process
-            while (it.hasNext()) {
-                try {
-                    Command cmd = (Command) it.next();
-                    stype = AllowedSourceTypes.valueOf(cmd.sourceType.toUpperCase());
-                    switch (stype) {
-                        /**
-                         * CLASS source type assumes that the data will be loaded from a java class
-                         * Which will be present in com.sachin.local. Class in the com.sachin.local
-                         * should implement the IDataSource inteface
-                         */
-                        case CLASS:
+                    /**
+                     * WS source type assumes that the data will be loaded from a web server.
+                     * The web server should hold a method named pullData.
+                     */
+                    case WS:
+                        // create WEB SERVICE client and fetch the data
+                        break;
 
-                            // Load the instance of the class mentioned in the datasource
-                            System.out.println("pattern " + cmd.pattern);
-                            System.out.println("source " + cmd.source);
-                            Class c = ClassLoader.getSystemClassLoader().loadClass(cmd.source);
-                            //Class c = CustomClassLoader.getInstance().loadClass(cmd.source);
-                            IDataSource ids = (IDataSource) c.newInstance();
-                            tempMap = new HashMap();
-                            tempMap.put("type", cmd.sourceType);
-                            tempMap.put("instance", ids);
-                            tempMap.put("usage", cmd.usage);
-                            COMMANDS.put(cmd.pattern, tempMap);
-
-                            break;
-
-
-                        /**
-                         * HTTP source type assumes that the data will be loaded from the http URL.
-                         */
-                        case HTTP:
-                            // load the data from HTTP URL
-                            System.out.println("pattern " + cmd.pattern);
-                            System.out.println("source " + cmd.source);
-                            HttpHandler httpHandler = new HttpHandler(cmd.source);
-                            tempMap = new HashMap();
-                            tempMap.put("type", cmd.sourceType);
-                            tempMap.put("instance", httpHandler);
-                            tempMap.put("usage", cmd.usage);
-                            COMMANDS.put(cmd.pattern, tempMap);
-                            break;
-
-                        /**
-                         * WS source type assumes that the data will be loaded from a web server.
-                         * The web server should hold a method named pullData.
-                         */
-                        case WS:
-                            // create WEB SERVICE client and fetch the data
-                            break;
-
-                        /**
-                         * SQL source type assumes that the data will be loaded from a database server.
-                         */
-                        case SQL:
-                            // Query the database to fetch the data
-                            System.out.println("pattern " + cmd.pattern);
-                            System.out.println("source " + cmd.source);
-                            DbHandler dbHandler = new DbHandler(cmd.source);
+                    /**
+                     * SQL source type assumes that the data will be loaded from a database server.
+                     */
+                    case SQL:
+                        // Query the database to fetch the data
+                        System.out.println("pattern " + cmd.pattern);
+                        System.out.println("source " + cmd.source);
+                        DbHandler dbHandler = new DbHandler(cmd.source);
                             tempMap = new HashMap();
                             tempMap.put("type", cmd.sourceType);
                             tempMap.put("instance", dbHandler);
@@ -253,7 +281,7 @@ public class App {
                             tempMap.put("instance", fileObj);
                             tempMap.put("usage", cmd.usage);
                             //tempMap.put("instance", cmd.source);
-                            System.out.println("bfore entering into command");
+                            System.out.println("before entering into command");
                            // System.out.println(fileObj.) ;
 
                             try{
@@ -278,14 +306,12 @@ public class App {
                     Logger.getLogger(App.class.getName()).log(Level.FATAL, null, ex);
                 }
             }
-        }
-        catch (Exception ex) {
-            Logger.getLogger(App.class.getName()).log(Level.FATAL, null, ex);
-        }
     }
 
     /**
-     * Closes the application
+     * Shutdown the application.
+     *
+     * @return void
      */
     public static void close() {
         chatter.logout();
