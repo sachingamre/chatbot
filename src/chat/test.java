@@ -14,7 +14,7 @@ import com.sachin.core.ds.Command;
  * @author sachin.gamre
  */
 public class test extends Interactivity {
-    
+
     public test(Command command) {
         super(command);
     }
@@ -25,7 +25,7 @@ public class test extends Interactivity {
     }
 
     @Override
-    public String pullData(String command, String[] args, int page, int totalRecords) {
+    public String pullData(Command command, String[] args, int page, int totalRecords) {
         String data = super.pullData(command, args, page, totalRecords);
         return data;
     }

@@ -8,6 +8,7 @@ package com.sachin.local.games;
 import com.sachin.app.App;
 import com.sachin.core.api.http.RequestMethod;
 import com.sachin.core.api.http.RestClient;
+import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -48,13 +49,13 @@ public class GameFinder implements IDataSource {
      * @param int totalRecords
      * @return String commandResponse
      */
-    public String pullData(String command, String[] args, int page, int totalRecords) {
+    public String pullData(Command command, String[] args, int page, int totalRecords) {
 
         // If have specific pattern with more than 1 arguments
         String commandResponse = "" ;
         String subPattern = args[0] ;
         // Utils.printArray(args) ;
-        
+
         // genre
         if(args.length > 0) {
             if(subPattern.equalsIgnoreCase("genre")) {
@@ -148,7 +149,7 @@ public class GameFinder implements IDataSource {
     private String _getFormatResultset(String foundRecords) {
         String formattedRecords = "\n";
         try {
-          
+
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document dom = dBuilder.parse(new ByteArrayInputStream(foundRecords.getBytes()));
@@ -161,7 +162,7 @@ public class GameFinder implements IDataSource {
                 String[] idParts = nodes.item(i).getTextContent().split("_"); // nodes.item(i).getAttributes().item(0).getNodeValue().split("_") ;
                 formattedRecords += idParts[0] + ": " + nodes.item(i + 1).getTextContent() + "\n" + "game url: " + nodes.item(i + 2).getFirstChild().getTextContent() + "\n\r";
             }
-            
+
         }
         catch (XPathExpressionException ex) {
             ex.printStackTrace() ;

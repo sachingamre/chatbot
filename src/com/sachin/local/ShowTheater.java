@@ -7,6 +7,7 @@ package com.sachin.local;
 
 import com.sachin.app.App;
 import com.sachin.core.api.db.DbManager;
+import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,10 +28,10 @@ public class ShowTheater implements IDataSource {
         _dbKey = DbManager.init(App.config.getString("dbserver"), App.config.getString("dbname"), App.config.getString("dbuser"), App.config.getString("dbpass"), App.config.getString("dbdriver")) ;
     }
 
-    public String pullData(String command, String[] args, int page, int totalRecords) {
+    public String pullData(Command command, String[] args, int page, int totalRecords) {
 
         String result = "";
-        
+
         // There are max to max two arguments, hence we are not putting the columns in array
         // We are just implementing if loops for handling function arguments
         String sql = "SELECT * FROM movie_shows " ;
@@ -42,7 +43,7 @@ public class ShowTheater implements IDataSource {
         }
         sql += " LIMIT ?,?" ;
         System.out.println(sql) ;
-        
+
         // build array list
         List argsList = new ArrayList() ;
         for(int i=0; i < args.length; i++) {
@@ -75,7 +76,7 @@ public class ShowTheater implements IDataSource {
         return result;
 
 
-        
+
     }
 
     public String pullAds() {

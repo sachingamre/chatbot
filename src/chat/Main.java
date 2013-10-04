@@ -26,6 +26,10 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
+            //String cmd = "ssh glmstudio@? 'ls -alt ? ?'";
+            //System.out.println(cmd.split("\\?", -1).length-1);
+            //System.out.println(cmd.replaceFirst("\\?", "app254"));
+            //System.exit(1);
             // Initialize the application environment
             // Read configuration and start the chatter box
             App.init();

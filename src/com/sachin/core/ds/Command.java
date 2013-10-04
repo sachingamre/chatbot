@@ -5,6 +5,7 @@
 
 package com.sachin.core.ds;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author sachin
  */
-public class Command {
+public class Command implements Serializable {
     public int id = 0;
     public String pattern = null ;
     public String description = null ;
@@ -25,9 +26,10 @@ public class Command {
     public List questions = new ArrayList() ;
     public String interactive = null ;
     public String doneMessage = null ;
+    public boolean autoReplaceArguments = false;
 
 
-    public Command(int instId, String instName, String instDescription,String instUsage, String instDataSourceType, String instDataSource, String qFields, String dFields, String defOp, List ques, String inter, String doneMsg) {
+    public Command(int instId, String instName, String instDescription,String instUsage, String instDataSourceType, String instDataSource, String qFields, String dFields, String defOp, List ques, String inter, String doneMsg, String autoReplaceArgs) {
         id = instId ;
         pattern = instName ;
         description = instDescription ;
@@ -40,5 +42,8 @@ public class Command {
         questions = ques ;
         interactive = inter ;
         doneMessage = doneMsg ;
+        if(autoReplaceArgs.equalsIgnoreCase("yes")) {
+            autoReplaceArguments = true;
+        }
     }
 }

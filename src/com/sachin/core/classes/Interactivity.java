@@ -33,11 +33,11 @@ public class Interactivity implements IDataSource {
             HashMap tmpCmd = new HashMap() ;
             tmpCmd.put("questions", questions) ;
             tmpCmd.put("question_counter", totalQuestions) ;
-            
+
             _commandQuestions.put(command.pattern, tmpCmd) ;
         }
     }
-    
+
     /**
      * The function interacts with the user. The very first time when the user
      * sends this command, the arguments to the commands are stored in a list
@@ -50,9 +50,9 @@ public class Interactivity implements IDataSource {
      * @param args
      * @param page
      * @param totalRecords
-     * @return String 
+     * @return String
      */
-    public String pullData(String cmd, String[] args, int page, int totalRecords) {
+    public String pullData(Command cmd, String[] args, int page, int totalRecords) {
         String data = null ;
 
         if(_user != null) {

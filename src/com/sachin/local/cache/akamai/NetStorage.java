@@ -4,6 +4,7 @@
  */
 package com.sachin.local.cache.akamai;
 
+import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 import com.sachin.core.utils.Utils;
 import java.io.File;
@@ -40,14 +41,14 @@ public class NetStorage implements IDataSource {
      * @param totalRecords
      * @return
      */
-    public String pullData(String command, String[] domains, int page, int totalRecords) {
+    public String pullData(Command command, String[] domains, int page, int totalRecords) {
         domains = Utils.clean(domains);
         Utils.printArray(domains);
         System.out.println(command);
         System.out.println("Args length " + domains.length);
         if(domains.length == 0) { return "no args"; }
 
-        SupportedCommand scmd = SupportedCommand.valueOf(command);
+        SupportedCommand scmd = SupportedCommand.valueOf(command.pattern);
 
         switch(scmd) {
             case nssync:    this.nsSync(Utils.replace("([^\\s]+)\\s*", "$1", domains[0]));

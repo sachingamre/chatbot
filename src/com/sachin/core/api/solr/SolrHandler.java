@@ -5,6 +5,8 @@
 
 package com.sachin.core.api.solr;
 
+import com.sachin.app.App;
+import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 import com.sachin.core.utils.Utils;
 import java.io.IOException;
@@ -29,7 +31,7 @@ import org.apache.solr.common.params.ModifiableSolrParams;
 
 /**
  * Class Handles communication between Solr server and chatter
- * for retrieval of data 
+ * for retrieval of data
  *
  * @author sachin
  */
@@ -42,13 +44,13 @@ public class SolrHandler implements IDataSource {
 
     /**
      * Takes Solr URL as a string parameter and assigns it to
-     * class's private member variable 
+     * class's private member variable
      *
      * @param solrUrl
      */
     public SolrHandler(String solrUrl, String queryFields, String displayFields, String defaultOperator) {
         if(solrUrl.equals("") || solrUrl == null) {
-            throw new NullPointerException("Solr url cannot be empty") ; 
+            throw new NullPointerException("Solr url cannot be empty") ;
         }
         _queryFields = queryFields.split(",") ;
         _displayFields = displayFields.split(",") ;
@@ -78,16 +80,16 @@ public class SolrHandler implements IDataSource {
                 SERVER.setParser(new XMLResponseParser());
             }
             catch (MalformedURLException ex) {
-                Logger.getLogger(SolrHandler.class.getName()).log(Level.SEVERE, null, ex);
+                App.logger.info(ex.getMessage());
             }
             catch(Exception ex) {
-                Logger.getLogger(SolrHandler.class.getName()).log(Level.SEVERE, null, ex);
+                App.logger.info(ex.getMessage());
             }
         }
         return SERVER ;
     }
 
-    public String pullData(String command, String[] args, int page, int totalRecords) {
+    public String pullData(Command command, String[] args, int page, int totalRecords) {
         String response = "";
         System.out.println("Printing args") ;
         Utils.printArray(args);
@@ -123,9 +125,9 @@ public class SolrHandler implements IDataSource {
             params.set("fl", StringUtils.join(_displayFields, ","));
             params.set("start", page1);
             params.set("rows", records);
-            params.set("wt", "xml");   
+            params.set("wt", "xml");
             System.out.println(params.toString());
-            
+
             QueryResponse queryResponse = getSolrServer().query(params);
             Iterator<SolrDocument> iter = queryResponse.getResults().iterator();
             String content, id, theateraddress, showtimings ;
@@ -144,12 +146,12 @@ public class SolrHandler implements IDataSource {
                 //response += "showid:" + id + ", moviename:" + content + ", theateraddress:" + theateraddress + ", timings:" + showtimings + "\n\r" ;
             }
             System.out.println("Done") ;
-        } 
+        }
         catch (SolrServerException ex) {
-            Logger.getLogger(SolrHandler.class.getName()).log(Level.SEVERE, null, ex);
+            App.logger.info(ex.getMessage());
         }
         catch(Exception ex) {
-            Logger.getLogger(SolrHandler.class.getName()).log(Level.SEVERE, null, ex);
+            App.logger.info(ex.getMessage());
         }
         System.out.println("Returning output") ;
         return response;
@@ -186,11 +188,11 @@ public class SolrHandler implements IDataSource {
 
             getSolrServer().add(docs);
             getSolrServer().commit();
-            
-        } 
+
+        }
         catch (SolrServerException ex) {
             Logger.getLogger(SolrHandler.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         catch (IOException ex) {
             Logger.getLogger(SolrHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

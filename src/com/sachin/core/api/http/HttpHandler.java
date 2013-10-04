@@ -5,6 +5,7 @@
 
 package com.sachin.core.api.http;
 
+import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 import java.io.IOException;
 import java.io.Serializable;
@@ -28,7 +29,7 @@ public class HttpHandler implements Serializable, IDataSource {
         _url = url ;
     }
 
-    public String pullData(String command, String[] args, int page, int totalRecords) {
+    public String pullData(Command command, String[] args, int page, int totalRecords) {
         HttpClient httpclient = new DefaultHttpClient();
         String responseBody = "" ;
         try {
@@ -42,7 +43,6 @@ public class HttpHandler implements Serializable, IDataSource {
             System.out.println("----------------------------------------");
             System.out.println(responseBody);
             System.out.println("----------------------------------------");
-
         }
         catch (IOException ex) {
             Logger.getLogger(HttpHandler.class.getName()).log(Level.SEVERE, null, ex);

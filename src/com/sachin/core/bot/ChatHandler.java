@@ -7,9 +7,11 @@ package com.sachin.core.bot;
 
 import com.sachin.app.App;
 import com.sachin.core.abstracts.Interactivity;
+import com.sachin.core.api.cli.CliHandler;
 import com.sachin.core.api.db.DbHandler;
 import com.sachin.core.api.http.HttpHandler;
 import com.sachin.core.api.solr.SolrHandler;
+import com.sachin.core.ds.Command;
 import com.sachin.core.ds.User;
 import com.sachin.core.interfaces.IDataSource;
 import com.sachin.core.utils.Utils;
@@ -17,8 +19,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.XMPPException;
@@ -30,13 +30,13 @@ import org.jivesoftware.smack.packet.Message;
  */
 public class ChatHandler implements MessageListener {
 
-    private String _user = null ;
+    private User _user = null ;
     private boolean handShakeInProcess = false;
     public static enum RESERVED_COMMANDS {NEXT, PREV} ;
 
     public ChatHandler(String username) {
         System.out.println("===============================User name " + username);
-        _user = username ;
+        _user = App.USERS.get(username) ;
     }
 
     /**
@@ -69,14 +69,14 @@ public class ChatHandler implements MessageListener {
                 System.out.println("Message body is " + messageBody) ;
                 System.out.println("Page is " + page) ;
 
-                if(isAuthorized(messageBody)) {
-                    if(messageBody != null && !messageBody.equals("") && isAllowed(messageBody)) {
+                if(_isAuthorized(messageBody)) {
+                    if(messageBody != null && !messageBody.equals("") && _isAllowed(messageBody)) {
                         String msgCmd = null ;
                         String msgArgs = null ;
 
                         // check if interactive session is on for the _user //then command typed must be answer to question
-                        if(App.COMMAND_INTERACTIVE_SESSION.containsKey(_user)) {
-                            msgCmd = ((HashMap) App.COMMAND_INTERACTIVE_SESSION.get(_user)).get("command").toString() ;
+                        if(App.COMMAND_INTERACTIVE_SESSION.containsKey(_user.loginName)) {
+                            msgCmd = ((HashMap) App.COMMAND_INTERACTIVE_SESSION.get(_user.loginName)).get("command").toString() ;
                             msgArgs = messageBody ;
                         }
                         else {
@@ -122,10 +122,10 @@ public class ChatHandler implements MessageListener {
                                             case CLASS:
 
                                                 IDataSource idx = (IDataSource) tempMap.get("instance");
-                                                String output = idx.pullData(msgCmd, messageParts, page, App.PAGE_RECORDS);
+                                                String output = idx.pullData((Command) tempMap.get("commandInstance"), messageParts, page, App.PAGE_RECORDS);
                                                 chat.sendMessage(output);
-                                                App.COMMAND_HISTORY.put(_user, messageBody);
-                                                App.COMMAND_PAGER.put(_user, page);
+                                                App.COMMAND_HISTORY.put(_user.loginName, messageBody);
+                                                App.COMMAND_PAGER.put(_user.loginName, page);
 
                                                 //chat.sendMessage(_getMessage(output, chat.getThreadID()));
                                                 break;
@@ -135,10 +135,22 @@ public class ChatHandler implements MessageListener {
 
                                                 HttpHandler httpHandler = (HttpHandler) tempMap.get("instance") ;
                                                 System.out.println("Fetching http content") ;
-                                                String response = httpHandler.pullData(msgCmd, messageParts, page, App.PAGE_RECORDS) ;
+                                                String response = httpHandler.pullData((Command) tempMap.get("commandInstance"), messageParts, page, App.PAGE_RECORDS) ;
                                                 chat.sendMessage(response);
-                                                App.COMMAND_HISTORY.put(_user, messageBody) ;
-                                                App.COMMAND_PAGER.put(_user, page) ;
+                                                App.COMMAND_HISTORY.put(_user.loginName, messageBody) ;
+                                                App.COMMAND_PAGER.put(_user.loginName, page) ;
+                                                //chat.sendMessage(_getMessage(response, chat.getThreadID()));
+                                                break;
+
+                                           case CLI:
+
+
+                                                CliHandler cliHandler = (CliHandler) tempMap.get("instance") ;
+                                                System.out.println("Fetching http content") ;
+                                                String cmdOutput = cliHandler.pullData((Command) tempMap.get("commandInstance"), messageParts, page, App.PAGE_RECORDS) ;
+                                                chat.sendMessage(cmdOutput);
+                                                App.COMMAND_HISTORY.put(_user.loginName, messageBody) ;
+                                                App.COMMAND_PAGER.put(_user.loginName, page) ;
                                                 //chat.sendMessage(_getMessage(response, chat.getThreadID()));
                                                 break;
 
@@ -150,10 +162,10 @@ public class ChatHandler implements MessageListener {
                                                 // Query the database to fetch the data
                                                 DbHandler dbHandler = (DbHandler) tempMap.get("instance") ;
                                                 System.out.println("Fetching Sql content") ;
-                                                String resultset = dbHandler.pullData(msgCmd, messageParts, page, App.PAGE_RECORDS) ;
+                                                String resultset = dbHandler.pullData((Command) tempMap.get("commandInstance"), messageParts, page, App.PAGE_RECORDS) ;
                                                 chat.sendMessage(resultset);
-                                                App.COMMAND_HISTORY.put(_user, messageBody) ;
-                                                App.COMMAND_PAGER.put(_user, page) ;
+                                                App.COMMAND_HISTORY.put(_user.loginName, messageBody) ;
+                                                App.COMMAND_PAGER.put(_user.loginName, page) ;
                                                 //chat.sendMessage(_getMessage(resultset, chat.getThreadID()));
                                                 break;
 
@@ -161,33 +173,33 @@ public class ChatHandler implements MessageListener {
                                                 // pull data from solr
                                                 SolrHandler solrHandler = (SolrHandler) tempMap.get("instance") ;
                                                 System.out.println("Fetching solr content") ;
-                                                String solrData = solrHandler.pullData(msgCmd, messageParts, page, App.PAGE_RECORDS) ;
+                                                String solrData = solrHandler.pullData((Command) tempMap.get("commandInstance"), messageParts, page, App.PAGE_RECORDS) ;
                                                 System.out.println("Sending data") ;
                                                 chat.sendMessage(solrData);
-                                                App.COMMAND_HISTORY.put(_user, messageBody) ;
-                                                App.COMMAND_PAGER.put(_user, page) ;
+                                                App.COMMAND_HISTORY.put(_user.loginName, messageBody) ;
+                                                App.COMMAND_PAGER.put(_user.loginName, page) ;
                                                 //chat.sendMessage(_getMessage(solrData, chat.getThreadID()));
                                                 break;
 
                                             case INTERACTIVE:
                                                 Interactivity interactivity = (Interactivity) tempMap.get("instance") ;
                                                 System.out.println("Doing interactive session") ;
-                                                String iaData = interactivity.forCPattern(msgCmd).forUser(_user).pullData(msgCmd, messageParts, page, App.PAGE_RECORDS) ;
+                                                String iaData = interactivity.forCPattern(msgCmd).forUser(_user.loginName).pullData((Command) tempMap.get("commandInstance"), messageParts, page, App.PAGE_RECORDS) ;
                                                 System.out.println("Sending data") ;
                                                 chat.sendMessage(iaData);
 
-                                                 String adsData = interactivity.forCPattern(msgCmd).forUser(_user).pullAds() ;
+                                                 String adsData = interactivity.forCPattern(msgCmd).forUser(_user.loginName).pullAds() ;
                                                 System.out.println("-----------------Sending ads--------") ;
                                                 chat.sendMessage(adsData);
 
-                                                App.COMMAND_HISTORY.put(_user, messageBody) ;
-                                                App.COMMAND_PAGER.put(_user, page) ;
+                                                App.COMMAND_HISTORY.put(_user.loginName, messageBody) ;
+                                                App.COMMAND_PAGER.put(_user.loginName, page) ;
                                                 break ;
 
                                             case STRING:
                                                 chat.sendMessage((String) tempMap.get("instance"));
-                                                App.COMMAND_HISTORY.put(_user, messageBody) ;
-                                                App.COMMAND_PAGER.put(_user, page) ;
+                                                App.COMMAND_HISTORY.put(_user.loginName, messageBody) ;
+                                                App.COMMAND_PAGER.put(_user.loginName, page) ;
 
                                                 //chat.sendMessage(_getMessage((String) tempMap.get("instance"), chat.getThreadID()));
                                                 break;
@@ -204,8 +216,8 @@ public class ChatHandler implements MessageListener {
                                                 fileObj.fileTransfer(filename, chat.getParticipant());
                                                 System.out.print("file transfer happened");
                                                 chat.sendMessage(fileObj.pullData(messageParts, page, App.PAGE_RECORDS));  //fake arguments
-                                                App.COMMAND_HISTORY.put(_user, messageBody) ;
-                                                App.COMMAND_PAGER.put(_user, page) ;
+                                                App.COMMAND_HISTORY.put(_user.loginName, messageBody) ;
+                                                App.COMMAND_PAGER.put(_user.loginName, page) ;
                                                 break ;
 
                                             default:
@@ -217,12 +229,14 @@ public class ChatHandler implements MessageListener {
                                         break;
                                     }
                                     catch (XMPPException ex) {
-                                        Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
+                                        App.logger.error(ex.getMessage());
+                                        // Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                     catch(Exception ex) {
-                                        Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
-                                        chat.sendMessage("COMMAND USAGE IS NOT CORRECT");
-
+                                        ex.printStackTrace();
+                                        App.logger.error(ex.getMessage());
+                                        // Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
+                                        chat.sendMessage("Command usage is not correct");
                                     }
                                 }
                                 else{
@@ -237,7 +251,8 @@ public class ChatHandler implements MessageListener {
                                     chat.sendMessage("Type 'help' for more information.");
                                 }
                                 catch (XMPPException ex) {
-                                    Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
+                                    // Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
+                                    App.logger.error(ex.getMessage());
                                 }
                             }
                         }
@@ -248,6 +263,7 @@ public class ChatHandler implements MessageListener {
                     }
                     else {
                         App.logger.info(chat.getParticipant()+"^"+message.getType()+"^"+message.getBody()) ;
+                        // Show custom help message. message of allowed commands.
                         chat.sendMessage("Type 'help' for more information.");
                     }
                 }
@@ -263,7 +279,8 @@ public class ChatHandler implements MessageListener {
 
         }
         catch(Exception ex) {
-            Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
+            App.logger.error(ex.getMessage());
+            //Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -274,30 +291,32 @@ public class ChatHandler implements MessageListener {
         return newMessage ;
     }
 
-    private boolean isAuthorized(String password) {
+    private boolean _isAuthorized(String password) {
+        System.out.println("User auth enabled " + App.ENABLE_USER_AUTH);
         if(App.ENABLE_USER_AUTH) {
-            if(App.AUTHORIZED_USERS.get(_user) != null) {
+            System.out.println("User object " + App.AUTHORIZED_USERS.get(_user.loginName));
+            if(App.AUTHORIZED_USERS.get(_user.loginName) != null) {
                 // Get current time in seconds
                 int seconds = ((int) (new Date()).getTime()/1000);
 
                 // get session expire time
-                int sessionExpiryTime = App.AUTHORIZED_USERS.get(_user);
+                int sessionExpiryTime = App.AUTHORIZED_USERS.get(_user.loginName);
 
                 if(sessionExpiryTime > seconds) {
 
                     // update session ExpiryTime
                     seconds = seconds + App.sessionTimeout;
-                    App.AUTHORIZED_USERS.put(_user, seconds);
+                    App.AUTHORIZED_USERS.put(_user.loginName, seconds);
                     return true;
                 }
             } else {
                 if(handShakeInProcess) {
                     // Check if password given is valid
-                    User user = App.USERS.get(_user);
-                    if(user.password.equalsIgnoreCase(password)) {
+                    //User user = App.USERS.get(_user);
+                    if(_user.password.equalsIgnoreCase(password)) {
                         // Add a session cookie and its expiry time
                         int seconds = ((int) (new Date()).getTime()/1000) + App.sessionTimeout;
-                        App.AUTHORIZED_USERS.put(_user, seconds);
+                        App.AUTHORIZED_USERS.put(_user.loginName, seconds);
                         handShakeInProcess = false;
                         return true;
                     }
@@ -310,15 +329,26 @@ public class ChatHandler implements MessageListener {
         return true;
     }
 
-    private boolean isAllowed(String command) {
-        System.out.println("Command " + command);
+    /**
+     * Method checks if user has access permission for given command.
+     *
+     * @param String command
+     * @return boolean
+     */
+    private boolean _isAllowed(String command) {
         // Check if ACL is enabled
         if(App.ENABLE_USER_ACL) {
-            User user = App.USERS.get(_user);
-            System.out.println("Allow all " + user.allowAll);
-            if(!user.allowAll) {
-                List commands = user.commands;
-                return commands.contains(command);
+
+            // Small hack to check if interactive session is going on.
+            if(App.COMMAND_INTERACTIVE_SESSION.containsKey(_user.loginName)) {
+                return true;
+            } else {
+                User user = App.USERS.get(_user.loginName);
+                System.out.println("Allow all " + user.allowAll);
+                if(!user.allowAll) {
+                    List commands = user.commands;
+                    return commands.contains(command);
+                }
             }
         }
         return true;
@@ -367,11 +397,13 @@ public class ChatHandler implements MessageListener {
             result.put("page", page) ;
         }
         catch(IllegalArgumentException ex) {
-            Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
+            App.logger.error(ex.getMessage());
+            //Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
             result.put("match", "no") ;
         }
         catch(Exception ex) {
-            Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
+            App.logger.error(ex.getMessage());
+            //Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
             result.put("match", "no") ;
         }
         return result ;

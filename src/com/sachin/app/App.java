@@ -5,6 +5,7 @@
 package com.sachin.app;
 
 import com.hazelcast.core.Hazelcast;
+import com.sachin.core.api.cli.CliHandler;
 import com.sachin.core.api.db.DbHandler;
 import com.sachin.core.api.http.HttpHandler;
 import com.sachin.core.api.solr.SolrHandler;
@@ -77,7 +78,7 @@ public class App {
 
     // Source type supported
     public static enum AllowedSourceTypes {
-        CLASS, HTTP, WS, SQL, SOLR, STRING, INTERACTIVE, DOWNLOAD
+        CLASS, HTTP, WS, SQL, SOLR, STRING, INTERACTIVE, DOWNLOAD, CLI
     };
     // Instance of the gmail BOT
     public static Chatter chatter = null;
@@ -92,38 +93,10 @@ public class App {
     public static void init() {
         try {
 
+            // Load configuration
             loadConfig();
 
-            /*
-            // Read config XML file and load it.
-            ConfigLoader configLoader = new ConfigLoader("config.xml");
-
-            // Get Bot credentials
-            CREDENTIALS = configLoader.getCredentials();
-            if("".equals(CREDENTIALS.get("loginname")) || CREDENTIALS.get("loginname") == null || "".equals(CREDENTIALS.get("password")) || CREDENTIALS.get("password") == null) {
-                System.out.println("Bot login password is missing, kindly update it in the config for application to start");
-                System.exit(1);
-            }
-
-            // Load Commands list
-            List commandList = configLoader.getCommands();
-            loadCommands(commandList);
-
-            // Load Users
-            USERS = configLoader.getUsers();
-
-            // Check if user auth is enabled.
-            ENABLE_USER_AUTH = configLoader.isAuthEnabled();
-
-            // Check if user acl is enabled.
-            ENABLE_USER_ACL = configLoader.isAclEnabled();
-
-            // Read number of records to be shown on each page.
-            PAGE_RECORDS = Integer.parseInt(App.config.getString("pagerecords"));
-            */
-
             //Starting chatter
-            // Login to the gmail through BOT
             chatter = new Chatter();
             chatter.login(CREDENTIALS.get("loginname"), CREDENTIALS.get("password"));
             chatter.setStatus("Available");
@@ -139,6 +112,11 @@ public class App {
         }
     }
 
+    /**
+     * Method reads config xml file and loads it in the memory.
+     *
+     * @throws FileNotFoundException
+     */
     public static void loadConfig() throws FileNotFoundException {
         // Read config XML file and load it.
             ConfigLoader configLoader = new ConfigLoader("config.xml");
@@ -169,6 +147,9 @@ public class App {
             PAGE_RECORDS = Integer.parseInt(App.config.getString("pagerecords"));
     }
 
+    /**
+     * Method reloads the configuration.
+     */
     public static void reloadConfig() {
         try {
             loadConfig();
@@ -216,6 +197,7 @@ public class App {
                         tempMap.put("type", cmd.sourceType);
                         tempMap.put("instance", ids);
                         tempMap.put("usage", cmd.usage);
+                        tempMap.put("commandInstance", cmd);
                         COMMANDS.put(cmd.pattern, tempMap);
                         break;
 
@@ -232,6 +214,7 @@ public class App {
                         tempMap.put("type", cmd.sourceType);
                         tempMap.put("instance", httpHandler);
                         tempMap.put("usage", cmd.usage);
+                        tempMap.put("commandInstance", cmd);
                         COMMANDS.put(cmd.pattern, tempMap);
                         break;
 
@@ -255,6 +238,7 @@ public class App {
                             tempMap.put("type", cmd.sourceType);
                             tempMap.put("instance", dbHandler);
                             tempMap.put("usage", cmd.usage);
+                            tempMap.put("commandInstance", cmd);
                             COMMANDS.put(cmd.pattern, tempMap);
                             break;
 
@@ -272,6 +256,25 @@ public class App {
                             tempMap.put("type", cmd.sourceType);
                             tempMap.put("instance", solrHandler);
                             tempMap.put("usage", cmd.usage);
+                            tempMap.put("commandInstance", cmd);
+                            COMMANDS.put(cmd.pattern, tempMap);
+                            break;
+
+                        /**
+                         * SOLR source type assumes that the data will be loaded from a solr server.
+                         */
+                        case CLI:
+                            // pull data from solr
+                            // load the data from HTTP URL
+                            System.out.println("pattern " + cmd.pattern);
+                            System.out.println("source " + cmd.source);
+                            CliHandler cliHandler = new CliHandler();
+                            System.out.println(cliHandler);
+                            tempMap = new HashMap();
+                            tempMap.put("type", cmd.sourceType);
+                            tempMap.put("instance", cliHandler);
+                            tempMap.put("usage", cmd.usage);
+                            tempMap.put("commandInstance", cmd);
                             COMMANDS.put(cmd.pattern, tempMap);
                             break;
 
@@ -303,6 +306,7 @@ public class App {
                             tempMap.put("type", cmd.sourceType);
                             tempMap.put("instance", mqInteractive);
                             tempMap.put("usage", cmd.usage);
+                            tempMap.put("commandInstance", cmd);
                             COMMANDS.put(cmd.pattern, tempMap);
                             break;
 
@@ -315,6 +319,7 @@ public class App {
                             tempMap.put("type", cmd.sourceType);
                             tempMap.put("instance", cmd.source);
                             tempMap.put("usage", cmd.usage);
+                            tempMap.put("commandInstance", cmd);
                             COMMANDS.put(cmd.pattern, tempMap);
                             break;
 
@@ -328,6 +333,7 @@ public class App {
                             System.out.println("putting in instance");
                             tempMap.put("instance", fileObj);
                             tempMap.put("usage", cmd.usage);
+                            tempMap.put("commandInstance", cmd);
                             //tempMap.put("instance", cmd.source);
                             System.out.println("before entering into command");
                            // System.out.println(fileObj.) ;

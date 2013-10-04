@@ -54,7 +54,7 @@ abstract public class Interactivity implements IDataSource {
      * @param totalRecords
      * @return String
      */
-    public String pullData(String command, String[] args, int page, int totalRecords) {
+    public String pullData(Command command, String[] args, int page, int totalRecords) {
         String data = null ;
 
         if(_user != null) {
@@ -119,7 +119,7 @@ abstract public class Interactivity implements IDataSource {
     }
 
     public String pullAds() {
-        return "ads" ;
+        return "" ;
     }
 
     public Interactivity forUser(String userName) {

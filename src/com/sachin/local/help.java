@@ -14,10 +14,10 @@ import java.util.HashMap;
  * @author suman.holani
  *
  *
- * 
- * Surround your text with the modifiers to style the string. 
- *      1. Asterisks will make it bold, 
- *      2. underscores will make it italicized, 
+ *
+ * Surround your text with the modifiers to style the string.
+ *      1. Asterisks will make it bold,
+ *      2. underscores will make it italicized,
  *      3. dashes will make it strikethrough.
  *
  */
@@ -26,7 +26,7 @@ public class help implements IDataSource {
     static String helpString = "";
 
     //String output = idx.pullData(messageParts, page, App.PAGE_RECORDS) ;
-    public String pullData(String command, String[] args, int page, int totalRecords) {
+    public String pullData(Command command, String[] args, int page, int totalRecords) {
         //look for subpattern if it contains command name then give its description
         String helpstr = "";
 

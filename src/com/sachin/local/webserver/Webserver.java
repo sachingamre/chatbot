@@ -4,6 +4,7 @@
  */
 package com.sachin.local.webserver;
 
+import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 import com.sachin.core.utils.Utils;
 import java.util.ArrayList;
@@ -23,10 +24,10 @@ public class Webserver implements IDataSource {
         restartweb, stopweb, startweb
     }
 
-    public String pullData(String command, String[] servers, int page, int totalRecords) {
+    public String pullData(Command command, String[] servers, int page, int totalRecords) {
         String message = "";
         System.out.println(command);
-        SupportedCommand scmd = SupportedCommand.valueOf(command);
+        SupportedCommand scmd = SupportedCommand.valueOf(command.pattern);
 
         if(servers.length == 0) { return "no args"; }
 

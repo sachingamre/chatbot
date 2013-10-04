@@ -5,6 +5,7 @@
 
 package com.sachin.local;
 
+import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 
 /**
@@ -13,7 +14,7 @@ import com.sachin.core.interfaces.IDataSource;
  */
 public class ShowMovie implements IDataSource {
 
-    public String pullData(String command, String[] args, int page, int totalRecords) {
+    public String pullData(Command command, String[] args, int page, int totalRecords) {
 
         // we expect user arguments
         String sql = "SELECT * FROM movie_shows " ;

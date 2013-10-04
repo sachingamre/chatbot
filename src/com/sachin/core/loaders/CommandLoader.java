@@ -133,10 +133,11 @@ public class CommandLoader {
             String interactive = getTextValue(empEl, "interactive") ;
             List questions = getListValue(empEl, "question") ;
             String doneMessage = getTextValue(empEl, "donemessage") ;
+            String autoReplaceArgs = getTextValue(empEl, "autoReplaceArgs") ;
             System.out.println(questions) ;
 
             //Create a new Command with the value read from the xml nodes
-            Command e = new Command(id,pattern,description,usage,sourcetype, source, qFields, dFields, defOpr, questions, interactive, doneMessage);
+            Command e = new Command(id,pattern,description,usage,sourcetype, source, qFields, dFields, defOpr, questions, interactive, doneMessage, autoReplaceArgs);
             //System.out.println(e) ;
             return e;
     }

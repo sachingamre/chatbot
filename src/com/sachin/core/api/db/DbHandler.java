@@ -6,6 +6,7 @@
 package com.sachin.core.api.db;
 
 import com.sachin.app.App;
+import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 import com.sachin.core.utils.Utils;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
  * @author sachin
  */
 public class DbHandler implements IDataSource {
-    
+
     private String _sql = null ;
     private String _dbKey = null ;
 
@@ -31,7 +32,7 @@ public class DbHandler implements IDataSource {
         _dbKey = DbManager.init(App.config.getString("dbserver"), App.config.getString("dbname"), App.config.getString("dbuser"), App.config.getString("dbpass"), App.config.getString("dbdriver")) ;
     }
 
-    public String pullData(String command, String[] args, int page, int totalRecords) {
+    public String pullData(Command command, String[] args, int page, int totalRecords) {
         String result = "";
         Utils.printArray(args);
 
@@ -54,7 +55,7 @@ public class DbHandler implements IDataSource {
         hmap.put("type", "int") ;
         hmap.put("value", page) ;
         argsList.add(hmap) ;
-        
+
         hmap = new HashMap() ;
         hmap.put("type", "int") ;
         hmap.put("value", totalRecords) ;
