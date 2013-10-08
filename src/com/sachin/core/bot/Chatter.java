@@ -15,6 +15,7 @@ import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterListener;
+import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Presence;
@@ -31,8 +32,6 @@ public class Chatter {
     public static int onlineFriends = 0 ;
     public static Roster roster ;
     final static String domain = "gmail.com" ;
-    private static String dbKey = null ;
-    private boolean aclEnabled = false;
 
     /**
      * Constructor
@@ -43,13 +42,17 @@ public class Chatter {
             // Get dbconnection
             //dbKey = DbManager.init("localhost", "chatdb", "chatdb", "chatdb", "mysql") ;
 
+            SASLAuthentication.registerSASLMechanism(GoogleSASLAuth.NAME, GoogleSASLAuth.class);
+            SASLAuthentication.supportSASLMechanism(GoogleSASLAuth.NAME, 0);
             ConnectionConfiguration config = new ConnectionConfiguration("talk.google.com", 5222, "gmail.com");
+            // ConnectionConfiguration config = new ConnectionConfiguration("www.researcherdream.com", 5222, "researcherdream.com");
             // ConnectionConfiguration config = new ConnectionConfiguration("ejabberd.zapak.com", 5222, "ejabberd.zapak.com");
+
             config.setCompressionEnabled(true);
-            config.setSASLAuthenticationEnabled(false);
+            config.setSASLAuthenticationEnabled(true);
             config.setSendPresence(true);
             config.setReconnectionAllowed(true);
-            config.setDebuggerEnabled(false);
+            config.setDebuggerEnabled(true);
 
             connection = new XMPPConnection(config);
             connection.connect();
@@ -233,7 +236,4 @@ public class Chatter {
             connection.sendPacket(presence);
         }
     }
-
-
-
 }

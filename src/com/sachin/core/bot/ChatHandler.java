@@ -215,7 +215,7 @@ public class ChatHandler implements MessageListener {
 
                                                 fileObj.fileTransfer(filename, chat.getParticipant());
                                                 System.out.print("file transfer happened");
-                                                chat.sendMessage(fileObj.pullData(messageParts, page, App.PAGE_RECORDS));  //fake arguments
+                                                chat.sendMessage(fileObj.pullData((Command) tempMap.get("commandInstance"),messageParts, page, App.PAGE_RECORDS));  //fake arguments
                                                 App.COMMAND_HISTORY.put(_user.loginName, messageBody) ;
                                                 App.COMMAND_PAGER.put(_user.loginName, page) ;
                                                 break ;
@@ -233,7 +233,6 @@ public class ChatHandler implements MessageListener {
                                         // Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                     catch(Exception ex) {
-                                        ex.printStackTrace();
                                         App.logger.error(ex.getMessage());
                                         // Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
                                         chat.sendMessage("Command usage is not correct");
@@ -264,7 +263,8 @@ public class ChatHandler implements MessageListener {
                     else {
                         App.logger.info(chat.getParticipant()+"^"+message.getType()+"^"+message.getBody()) ;
                         // Show custom help message. message of allowed commands.
-                        chat.sendMessage("Type 'help' for more information.");
+                        // chat.sendMessage("Type 'help' for more information.");
+                        chat.sendMessage(_user.help);
                     }
                 }
                 else {
@@ -296,18 +296,24 @@ public class ChatHandler implements MessageListener {
         if(App.ENABLE_USER_AUTH) {
             System.out.println("User object " + App.AUTHORIZED_USERS.get(_user.loginName));
             if(App.AUTHORIZED_USERS.get(_user.loginName) != null) {
+
                 // Get current time in seconds
-                int seconds = ((int) (new Date()).getTime()/1000);
+                System.out.println((long) (new Date()).getTime()/1000);
+                long seconds = ((long) (new Date()).getTime()/1000);
 
                 // get session expire time
-                int sessionExpiryTime = App.AUTHORIZED_USERS.get(_user.loginName);
-
+                long sessionExpiryTime = App.AUTHORIZED_USERS.get(_user.loginName);
+                System.out.println("---------------------------- Current time " + seconds + " session expiry time " + sessionExpiryTime );
                 if(sessionExpiryTime > seconds) {
 
                     // update session ExpiryTime
                     seconds = seconds + App.sessionTimeout;
+                    System.out.println("------------------------- Current time " + seconds + " session expiry time " + sessionExpiryTime );
                     App.AUTHORIZED_USERS.put(_user.loginName, seconds);
                     return true;
+                } else {
+                    App.AUTHORIZED_USERS.remove(_user.loginName);
+                    return false;
                 }
             } else {
                 if(handShakeInProcess) {
@@ -315,7 +321,9 @@ public class ChatHandler implements MessageListener {
                     //User user = App.USERS.get(_user);
                     if(_user.password.equalsIgnoreCase(password)) {
                         // Add a session cookie and its expiry time
-                        int seconds = ((int) (new Date()).getTime()/1000) + App.sessionTimeout;
+                        System.out.println("------------------------------------" + (long) (new Date()).getTime()/1000);
+                        long seconds = ((long) (new Date()).getTime()/1000) + App.sessionTimeout;
+                        System.out.println("------------------------------------" + "Setting session expiry " + seconds);
                         App.AUTHORIZED_USERS.put(_user.loginName, seconds);
                         handShakeInProcess = false;
                         return true;

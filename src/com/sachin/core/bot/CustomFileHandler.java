@@ -4,12 +4,11 @@
  */
 package com.sachin.core.bot;
 
+import com.sachin.core.ds.Command;
 import com.sachin.core.interfaces.IDataSource;
 import java.io.File;
 import java.io.Serializable;
-
 import org.jivesoftware.smack.XMPPException;
-
 import org.jivesoftware.smackx.filetransfer.FileTransfer.Status;
 import org.jivesoftware.smackx.filetransfer.FileTransferManager;
 import org.jivesoftware.smackx.filetransfer.FileTransferNegotiator;
@@ -19,7 +18,7 @@ import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
  *
  * @author suman.holani
  */
-public class CustomFileHandler implements Serializable {
+public class CustomFileHandler implements Serializable, IDataSource {
 
     protected String status = null;
     protected FileTransferManager manager = null;
@@ -46,7 +45,7 @@ public class CustomFileHandler implements Serializable {
         // Send the file
        File fl=new File(fileName);
        System.out.println("file path is "+fl.getPath()+"and contains "+fl.length() + "destination is "+destination);
-    
+
         transfer.sendFile(fl, "You won't believe this!");
 
         while (!transfer.isDone()) {
@@ -63,7 +62,7 @@ public class CustomFileHandler implements Serializable {
 
     }
 
-    public String pullData(String[] args, int page, int totalRecords) {
+    public String pullData(Command cmd, String[] args, int page, int totalRecords) {
          if (transfer.getStatus().equals(Status.error)) {
 
         System.out.println("ERROR!!! " + transfer.getError());
@@ -74,7 +73,7 @@ public class CustomFileHandler implements Serializable {
 
         System.out.println("Status :: " + transfer.getStatus() + " | Error :: " + transfer.getError() + " | Exception :: " + transfer.getException());
         status = String.valueOf(transfer.getStatus());
-        
+
         return status;
     }
 

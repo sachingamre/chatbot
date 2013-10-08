@@ -35,7 +35,7 @@ public class App {
 
     public static boolean ENABLE_USER_ACL = false;
 
-    public static int sessionTimeout = 86400;   // 1 hour in seconds
+    public static int sessionTimeout = 30;   // 1 hour in seconds
 
     // We are using log4j for logging. So getting instance of log4j logger
     public static Logger logger = Logger.getLogger("com");
@@ -53,7 +53,7 @@ public class App {
      * Record structure <sachingamre@gmail.com,12345677>.
      *
      */
-    public static Map<String, Integer> AUTHORIZED_USERS = Hazelcast.getMap("authorized_users");
+    public static Map<String, Long> AUTHORIZED_USERS = Hazelcast.getMap("authorized_users");
 
     // Map stores Precooked (instantiated) datasources for each command
     // The Map stores the class instances against each command pattern
