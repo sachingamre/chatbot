@@ -35,7 +35,7 @@ public class App {
 
     public static boolean ENABLE_USER_ACL = false;
 
-    public static int sessionTimeout = 30;   // 1 hour in seconds
+    public static int sessionTimeout = 3600;   // 1 hour in seconds
 
     // We are using log4j for logging. So getting instance of log4j logger
     public static Logger logger = Logger.getLogger("com");
@@ -47,6 +47,8 @@ public class App {
 
     // Map stores Users
     public static Map<String, User> USERS = Hazelcast.getMap("users");
+
+    public static String ARGUMENT_SEPARATOR = ",";
 
     /**
      * Map stores Session timer for authorized users.
@@ -101,6 +103,7 @@ public class App {
             chatter.login(CREDENTIALS.get("loginname"), CREDENTIALS.get("password"));
             chatter.setStatus("Available");
             chatter.manageFriends();
+            chatter.manageMereFriends();
             chatter.addChatListener();
         }
         catch(FileNotFoundException fe) {

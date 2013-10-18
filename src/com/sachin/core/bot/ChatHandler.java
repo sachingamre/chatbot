@@ -70,7 +70,7 @@ public class ChatHandler implements MessageListener {
                 System.out.println("Page is " + page) ;
 
                 if(_isAuthorized(messageBody)) {
-                    if(messageBody != null && !messageBody.equals("") && _isAllowed(messageBody)) {
+                    if(messageBody != null && !messageBody.equals("")) {
                         String msgCmd = null ;
                         String msgArgs = null ;
 
@@ -89,10 +89,11 @@ public class ChatHandler implements MessageListener {
                             // eg: find genre,action
                             msgArgs = Utils.replace("^([^\\s]+)([^\\S]+)(.+)", "$3", messageBody) ; //suman
                         }
-                        String[] messageParts = msgArgs.split(",") ;
+                        String[] messageParts = msgArgs.split(App.ARGUMENT_SEPARATOR) ;
 
                         // Proceed if message body is not empty some command is thr
-                        if(messageParts.length > 0) {
+                        //if(messageParts.length > 0) {
+                        if(_isAllowed(msgCmd)) {
 
                             // Refer the commands set for action match
                             Iterator it = App.COMMANDS.keySet().iterator() ;
@@ -257,14 +258,15 @@ public class ChatHandler implements MessageListener {
                         }
                         else {
                             App.logger.info(chat.getParticipant()+"^"+message.getType()+"^"+message.getBody()) ;
-                            chat.sendMessage("Type 'help' for more information.");
+                            // chat.sendMessage("Type 'help' for more information.");
+                            chat.sendMessage(_user.help);
                         }
                     }
                     else {
                         App.logger.info(chat.getParticipant()+"^"+message.getType()+"^"+message.getBody()) ;
                         // Show custom help message. message of allowed commands.
-                        // chat.sendMessage("Type 'help' for more information.");
-                        chat.sendMessage(_user.help);
+                        chat.sendMessage("Type 'help' for more information.");
+                        //chat.sendMessage(_user.help);
                     }
                 }
                 else {
@@ -279,6 +281,7 @@ public class ChatHandler implements MessageListener {
 
         }
         catch(Exception ex) {
+            ex.printStackTrace();
             App.logger.error(ex.getMessage());
             //Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -294,9 +297,8 @@ public class ChatHandler implements MessageListener {
     private boolean _isAuthorized(String password) {
         System.out.println("User auth enabled " + App.ENABLE_USER_AUTH);
         if(App.ENABLE_USER_AUTH) {
-            System.out.println("User object " + App.AUTHORIZED_USERS.get(_user.loginName));
-            if(App.AUTHORIZED_USERS.get(_user.loginName) != null) {
-
+            if(App.AUTHORIZED_USERS.containsKey(_user.loginName)) {
+                System.out.println("User object " + App.AUTHORIZED_USERS.get(_user.loginName));
                 // Get current time in seconds
                 System.out.println((long) (new Date()).getTime()/1000);
                 long seconds = ((long) (new Date()).getTime()/1000);
@@ -313,6 +315,7 @@ public class ChatHandler implements MessageListener {
                     return true;
                 } else {
                     App.AUTHORIZED_USERS.remove(_user.loginName);
+                    handShakeInProcess = true;
                     return false;
                 }
             } else {
@@ -353,6 +356,7 @@ public class ChatHandler implements MessageListener {
             } else {
                 User user = App.USERS.get(_user.loginName);
                 System.out.println("Allow all " + user.allowAll);
+                System.out.println("Command " + command);
                 if(!user.allowAll) {
                     List commands = user.commands;
                     return commands.contains(command);

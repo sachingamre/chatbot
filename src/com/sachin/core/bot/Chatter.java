@@ -12,12 +12,15 @@ import java.util.logging.Logger;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.filter.PacketFilter;
+import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
 
 /**
@@ -104,6 +107,7 @@ public class Chatter {
                 for(String friend:addresses) {
                     // Log new entry
                     App.logger.info("new^" + friend) ;
+                    System.out.println("new friend " + friend);
                     totalFriends++ ;
                 }
             }
@@ -116,6 +120,66 @@ public class Chatter {
             }
         });
     }
+
+    public void manageMereFriends() {
+        connection.addPacketListener(
+            new PacketListener() {
+                @Override
+                public void processPacket(Packet paramPacket) {
+                    System.out.println("\n\n");
+                     System.out.println(paramPacket.toString());   
+                    if(paramPacket instanceof Presence){
+                        Presence presence = (Presence)paramPacket;
+                        String email = presence.getFrom();
+                        System.out.println("chat invite status changed by user: : " + email + " calling listner");
+                        //if(presence.getType().equals(Presence.Type.subscribed) || presence.getType().equals(Presence.Type.subscribe) ){
+                        System.out.println("presence: " + presence.getFrom() + "; type: " + presence.getType() + "; to: " + presence.getTo() + "; " + presence.toXML());
+                        Roster roster = connection.getRoster();
+                        for(RosterEntry rosterEntry : roster.getEntries()){
+                            System.out.println("jid: " + rosterEntry.getUser() + "; type: " + rosterEntry.getType() + "; status: " + rosterEntry.getStatus());
+                }
+                        System.out.println("\n\n\n");
+
+                        if( presence.getType().equals(Presence.Type.subscribe) ){
+                            //chatInviteAcceptanceListner.onChatInviteAccept(email);
+
+                            Presence newp = new Presence(Presence.Type.subscribed);
+                            newp.setMode(Presence.Mode.available);
+                            newp.setPriority(24);
+                            newp.setTo(presence.getFrom());
+                            //presence.addExtension(new AvatarBroadcastExtension(imageHash));
+                            connection.sendPacket(newp);
+                        } else if(presence.getType().equals(Presence.Type.unsubscribe)){
+                            //chatInviteAcceptanceListner.onChatInviteReject(email);
+                            Presence newp = new Presence(Presence.Type.unsubscribed);
+                            newp.setMode(Presence.Mode.available);
+                            newp.setPriority(24);
+                            newp.setTo(presence.getFrom());
+                            //presence.addExtension(new AvatarBroadcastExtension(imageHash));
+                            connection.sendPacket(newp);
+                        }
+                    }
+                }
+            },
+            new PacketFilter(){
+                public boolean accept(Packet packet) {
+
+                    if(packet instanceof Presence) {
+                        Presence presence = (Presence)packet;
+                        if(presence.getType().equals(Presence.Type.subscribed)
+                            || presence.getType().equals(Presence.Type.subscribe)
+                            || presence.getType().equals(Presence.Type.unsubscribed)
+                            || presence.getType().equals(Presence.Type.unsubscribe) ) {
+                            //System.out.println("packet: " + packet);
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+        );
+    }
+
 
     private void _updateFriendsCountToDb() {
 
